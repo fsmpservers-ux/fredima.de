@@ -31,58 +31,11 @@
     </div>
 
     <div class="footer-text" id="footerText">
-        Hi! My name is fredi and I'am a 14 year old developer from Germany. I love playing Minecraft and working on cool projects!
+        Hi! My name is fredi and I'am a 14 year old developer from Germany. I love playing Minecraft and working on cool projects! Let's create something awesome together!
     </div>
 </div>
 
 <script>
-    // Minecraft-style color codes mapping
-    const colorMap = {
-        '§0': '#000000',
-        '§1': '#0000AA',
-        '§2': '#00AA00',
-        '§3': '#00AAAA',
-        '§4': '#AA0000',
-        '§5': '#AA00AA',
-        '§6': '#FFAA00',
-        '§7': '#AAAAAA',
-        '§8': '#555555',
-        '§9': '#5555FF',
-        '§a': '#55FF55',
-        '§b': '#55FFFF',
-        '§c': '#FF5555',
-        '§d': '#FF55FF',
-        '§e': '#FFFF55',
-        '§f': '#FFFFFF'
-    };
-
-    const formatMap = {
-        '§l': 'font-weight: bold;',
-        '§m': 'text-decoration: line-through;',
-        '§n': 'text-decoration: underline;',
-        '§o': 'font-style: italic;'
-    };
-
-    function parseMOTD(motd) {
-        let html = motd;
-        
-        // Apply colors
-        Object.entries(colorMap).forEach(([code, color]) => {
-            html = html.replace(new RegExp(code, 'g'), `<span style="color: ${color}">`);
-        });
-
-        // Apply formats
-        Object.entries(formatMap).forEach(([code, style]) => {
-            html = html.replace(new RegExp(code, 'g'), `<span style="${style}">`);
-        });
-
-        // Close spans
-        const spanCount = (html.match(/<span/g) || []).length;
-        html += '</span>'.repeat(spanCount);
-
-        return html;
-    }
-
     async function loadAndDisplayMOTD() {
         try {
             const response = await fetch('motd.json');
@@ -90,7 +43,7 @@
             const randomMOTD = motds[Math.floor(Math.random() * motds.length)];
             
             const motdElement = document.getElementById('motd');
-            motdElement.innerHTML = parseMOTD(randomMOTD);
+            motdElement.textContent = randomMOTD;
         } catch (error) {
             console.error('Error loading MOTD:', error);
             document.getElementById('motd').textContent = '✧ welcome ✧';
