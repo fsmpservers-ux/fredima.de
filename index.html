@@ -75,6 +75,32 @@
         animation: glow 3s ease-in-out infinite alternate;
         text-align: center;
         position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .motd {
+        font-size: clamp(0.6rem, 1.5vw, 1.2rem);
+        color: #a0a0a0;
+        font-weight: 400;
+        letter-spacing: 0.05em;
+        text-transform: none;
+        background: none;
+        -webkit-text-fill-color: unset;
+        animation: motdGlow 3s ease-in-out infinite alternate;
+        opacity: 0.8;
+    }
+
+    @keyframes motdGlow {
+        0% {
+            filter: drop-shadow(0 0 10px rgba(236, 72, 153, 0.3));
+        }
+        100% {
+            filter: drop-shadow(0 0 20px rgba(34, 211, 238, 0.5));
+        }
     }
 
     @keyframes glow {
@@ -220,7 +246,10 @@
     <div class="background"></div>
     <div class="grid"></div>
 <div class="container">
-    <h1 class="logo">fredima.de</h1>
+    <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem;">
+        <h1 class="logo" style="margin-bottom: 0;">fredima.de</h1>
+        <div class="motd" id="motd"></div>
+    </div>
     <p class="subtitle">Digital Services</p>
     
     <div class="links">
