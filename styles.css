@@ -313,23 +313,29 @@ body {
     text-transform: lowercase;
     letter-spacing: -0.05em;
     background: linear-gradient(135deg, #ec4899 0%, #22d3ee 100%);
+    background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     margin-bottom: 1rem;
-    animation: glitchCode 0.3s ease-in-out infinite alternate;
+    animation: glitchCode 0.4s ease-in-out infinite alternate, gradientShift 3s ease-in-out infinite;
     text-align: center;
     line-height: 1;
+    display: inline-block;
+    width: 100%;
 }
 
 @keyframes glitchCode {
     0% {
-        filter: drop-shadow(0 0 30px rgba(236, 72, 153, 0.5));
+        filter: drop-shadow(0 0 20px rgba(236, 72, 153, 0.4)) drop-shadow(0 0 10px rgba(34, 211, 238, 0.2));
         transform: skewX(0deg);
     }
+    50% {
+        filter: drop-shadow(0 0 30px rgba(236, 72, 153, 0.5)) drop-shadow(0 0 20px rgba(34, 211, 238, 0.4));
+    }
     100% {
-        filter: drop-shadow(0 0 50px rgba(34, 211, 238, 0.8));
-        transform: skewX(-2deg);
+        filter: drop-shadow(0 0 40px rgba(34, 211, 238, 0.6)) drop-shadow(0 0 10px rgba(236, 72, 153, 0.3));
+        transform: skewX(-1deg);
     }
 }
 
