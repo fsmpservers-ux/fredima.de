@@ -305,3 +305,169 @@ body {
         padding: 0 12px;
     }
 }
+
+/* 404 Error Page Styles */
+.error-code {
+    font-size: clamp(5rem, 25vw, 12rem);
+    font-weight: 900;
+    text-transform: lowercase;
+    letter-spacing: -0.05em;
+    background: linear-gradient(135deg, #ec4899 0%, #22d3ee 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+    animation: glitchCode 0.3s ease-in-out infinite alternate;
+    text-align: center;
+    line-height: 1;
+}
+
+@keyframes glitchCode {
+    0% {
+        filter: drop-shadow(0 0 30px rgba(236, 72, 153, 0.5));
+        transform: skewX(0deg);
+    }
+    100% {
+        filter: drop-shadow(0 0 50px rgba(34, 211, 238, 0.8));
+        transform: skewX(-2deg);
+    }
+}
+
+.error-title {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #fff;
+    text-align: center;
+    letter-spacing: 0.05em;
+}
+
+.error-description {
+    font-size: 1.1rem;
+    color: #a0a0a0;
+    text-align: center;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    line-height: 1.8;
+}
+
+.error-actions {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+}
+
+.btn {
+    padding: 1rem 2.5rem;
+    border-radius: 15px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-home {
+    background: linear-gradient(135deg, #ec4899, #22d3ee);
+    color: #000;
+    font-weight: 700;
+}
+
+.btn-home:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(236, 72, 153, 0.4);
+    filter: brightness(1.1);
+}
+
+.btn-back {
+    background: rgba(20, 20, 20, 0.6);
+    color: #fff;
+    border: 2px solid #ec4899;
+}
+
+.btn-back:hover {
+    transform: translateY(-3px);
+    background: rgba(236, 72, 153, 0.1);
+    box-shadow: 0 15px 30px rgba(236, 72, 153, 0.3);
+}
+
+.error-animation {
+    position: relative;
+    height: 200px;
+    margin-bottom: 2rem;
+}
+
+.floating-object {
+    position: absolute;
+    font-size: 3rem;
+    opacity: 0.3;
+    animation: floatAround 8s ease-in-out infinite;
+}
+
+.floating-object:nth-child(1) {
+    left: 10%;
+    animation-delay: 0s;
+    animation-duration: 8s;
+}
+
+.floating-object:nth-child(2) {
+    right: 10%;
+    top: 50px;
+    animation-delay: 2s;
+    animation-duration: 10s;
+}
+
+.floating-object:nth-child(3) {
+    left: 50%;
+    bottom: 0;
+    animation-delay: 4s;
+    animation-duration: 12s;
+}
+
+@keyframes floatAround {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    25% {
+        transform: translate(30px, -30px) rotate(90deg);
+    }
+    50% {
+        transform: translate(-20px, -50px) rotate(180deg);
+    }
+    75% {
+        transform: translate(40px, -20px) rotate(270deg);
+    }
+    100% {
+        transform: translate(0, 0) rotate(360deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .error-code {
+        margin-bottom: 0.5rem;
+    }
+
+    .error-actions {
+        gap: 1rem;
+    }
+
+    .btn {
+        padding: 0.8rem 2rem;
+        font-size: 0.95rem;
+    }
+
+    .error-animation {
+        height: 120px;
+    }
+
+    .floating-object {
+        font-size: 2rem;
+    }
+}
