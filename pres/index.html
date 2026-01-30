@@ -730,64 +730,7 @@
                 }
             });
 
-            // Scatter Chart
-            const ctx2 = document.getElementById('scatterChart').getContext('2d');
-            new Chart(ctx2, {
-                type: 'scatter',
-                data: {
-                    datasets: [
-                        {
-                            label: 'Gamers',
-                            data: gamerValues.map((v, i) => ({ x: i + 1, y: v })),
-                            backgroundColor: '#6366f1',
-                            borderColor: '#6366f1',
-                            borderWidth: 2,
-                            showLine: false,
-                            pointRadius: 7,
-                            pointHoverRadius: 9
-                        },
-                        {
-                            label: 'Non-Gamers',
-                            data: nonGamerValues.map((v, i) => ({ x: i + 7, y: v })),
-                            backgroundColor: '#f59e0b',
-                            borderColor: '#f59e0b',
-                            borderWidth: 2,
-                            showLine: false,
-                            pointRadius: 7,
-                            pointHoverRadius: 9
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: true } },
-                    scales: {
-                        y: { beginAtZero: true, max: 600, grid: { drawBorder: false } },
-                        x: { grid: { display: false } }
-                    }
-                }
-            });
 
-            // Pie Chart
-            const ctx3 = document.getElementById('pieChart').getContext('2d');
-            new Chart(ctx3, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Gamers', 'Non-Gamers'],
-                    datasets: [{
-                        data: [gamerValues.length, nonGamerValues.length],
-                        backgroundColor: ['#6366f1', '#f59e0b'],
-                        borderColor: 'white',
-                        borderWidth: 3
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom' } }
-                }
-            });
 
             // Radar Chart
             const ctx4 = document.getElementById('radarChart').getContext('2d');
