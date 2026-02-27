@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>aspm – Messenger Download</title>
+
+  <style>
+    :root {
+      --bg: #0f1115;
+      --card: #161a22;
+      --text: #e6e6eb;
+      --muted: #9aa0aa;
+      --accent: #4f8cff;
+      --accent-hover: #3b73d9;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: radial-gradient(1200px 600px at top, #161a22, var(--bg));
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 520px;
+      padding: 32px;
+      background: var(--card);
+      border-radius: 14px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 2.2rem;
+      letter-spacing: 0.02em;
+    }
+
+    p {
+      margin: 0 0 24px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .download-btn {
+      display: inline-block;
+      padding: 14px 26px;
+      background: var(--accent);
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.15s ease, transform 0.1s ease;
+    }
+
+    .download-btn:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .all-downloads {
+      margin-top: 24px;
+      font-size: 0.9rem;
+    }
+
+    .all-downloads a {
+      color: var(--muted);
+      text-decoration: none;
+      margin: 0 8px;
+    }
+
+    .all-downloads a:hover {
+      color: var(--text);
+      text-decoration: underline;
+    }
+
+    footer {
+      margin-top: 26px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>aspm</h1>
+    <p>Ein moderner Messenger.<br />Schnell, einfach und plattformübergreifend.</p>
+
+    <a id="downloadBtn" class="download-btn" href="#">
+      Download wird vorbereitet…
+    </a>
+
+    <div class="all-downloads">
+      <a href="https://download.fredima.de/aspm/windows-latest">Windows</a>
+      <a href="https://download.fredima.de/aspm/macos-latest">macOS</a>
+      <a href="https://download.fredima.de/aspm/linux-latest">Linux</a>
+    </div>
+
+    <footer>
+      © <span id="year"></span> fredima.de
+    </footer>
+  </div>
+
+  <script>
+    const btn = document.getElementById("downloadBtn");
+    const ua = navigator.userAgent.toLowerCase();
+
+    let url = "";
+    let label = "";
+
+    if (ua.includes("windows")) {
+      url = "https://download.fredima.de/aspm/windows-latest";
+      label = "Download für Windows";
+    } else if (ua.includes("mac")) {
+      url = "https://download.fredima.de/aspm/macos-latest";
+      label = "Download für macOS";
+    } else if (ua.includes("linux")) {
+      url = "https://download.fredima.de/aspm/linux-latest";
+      label = "Download für Linux";
+    } else {
+      label = "Downloads anzeigen";
+    }
+
+    btn.textContent = label;
+    if (url) btn.href = url;
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
