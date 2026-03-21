@@ -1,5 +1,7 @@
-echo "Entering Root enviroment..."
-sudo -s
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 
+   exit 1
+fi
 echo "Pulling newest changes..."
 cd /var/www/fredima.de/
 git pull > ./null.txt
