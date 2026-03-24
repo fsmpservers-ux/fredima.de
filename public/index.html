@@ -28,7 +28,7 @@
     
     <title>fredima.de - Digital Services & Portfolio</title>
 
-    <link rel="stylesheet" href="../style/styles.css">
+    <link rel="stylesheet" href="/style/styles.css">
 
 
 </head>
@@ -57,7 +57,7 @@
 <script>
     async function loadAndDisplayMOTD() {
         try {
-            const response = await fetch('../config/motd.json');
+            const response = await fetch('/config/motd.json');
             const motds = await response.json();
             const randomMOTD = motds[Math.floor(Math.random() * motds.length)];
             
