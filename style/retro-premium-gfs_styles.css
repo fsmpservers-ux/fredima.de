@@ -1272,32 +1272,3 @@ body::after,
 }
 }
 
-/* Notizen-Panel Styling */
-#presenter-notes {
-  position: fixed;
-  bottom: 80px;
-  right: 20px;
-  width: 350px;
-  background: rgba(0,26,0,0.95);
-  border: 2px solid var(--accent);
-  padding: 20px;
-  z-index: 10000;
-  font-size: 12px;
-  box-shadow: 0 0 30px rgba(0,255,65,0.3);
-}
-
-.notes-panel h3 {
-  color: var(--accent);
-  margin-bottom: 12px;
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-.timer {
-  margin-top: 16px;
-  padding-top: 12px;
-  border-top: 1px solid var(--accent);
-  color: var(--accent2);
-  font-weight: bold;
-}
