@@ -425,27 +425,7 @@ function render() {
   requestAnimationFrame(render);
 }
 
-// ══════════════════════════════════════════════
-// MATRIX RAIN EFFECT
-// ══════════════════════════════════════════════
-function createMatrixRain() {
-const sidebar = document.getElementById('atom-sidebar');
-const chars = '01アイウエオカキクケコサシスセソタチツテト';
 
-setInterval(() => {
-    if (Math.random() > 0.7) {
-      const char = document.createElement('div');
-      char.className = 'matrix-char';
-      char.textContent = chars[Math.floor(Math.random() * chars.length)];
-      char.style.left = Math.random() * 100 + '%';
-      char.style.animationDuration = (Math.random() * 5 + 5) + 's';
-      char.style.animationDelay = Math.random() * 2 + 's';
-      sidebar.appendChild(char);
-      
-      setTimeout(() => char.remove(), 10000);
-    }
-}, 500);
-}
 
 // ══════════════════════════════════════════════
 // BOOT SEQUENCE
