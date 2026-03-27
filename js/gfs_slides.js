@@ -424,7 +424,140 @@ function render() {
  
   requestAnimationFrame(render);
 }
- 
+
+// ══════════════════════════════════════════════
+// MATRIX RAIN EFFECT
+// ══════════════════════════════════════════════
+function createMatrixRain() {
+const sidebar = document.getElementById('atom-sidebar');
+const chars = '01アイウエオカキクケコサシスセソタチツテト';
+
+setInterval(() => {
+    if (Math.random() > 0.7) {
+      const char = document.createElement('div');
+      char.className = 'matrix-char';
+      char.textContent = chars[Math.floor(Math.random() * chars.length)];
+      char.style.left = Math.random() * 100 + '%';
+      char.style.animationDuration = (Math.random() * 5 + 5) + 's';
+      char.style.animationDelay = Math.random() * 2 + 's';
+      sidebar.appendChild(char);
+      
+      setTimeout(() => char.remove(), 10000);
+    }
+}, 500);
+}
+
+// ══════════════════════════════════════════════
+// BOOT SEQUENCE
+// ══════════════════════════════════════════════
+function bootSequence() {
+const messages = [
+    'INITIALIZING SYSTEM...',
+    'LOADING ATOM MODELS...',
+    'CALIBRATING QUANTUM STATES...',
+    'READY.'
+];
+
+const bootDiv = document.createElement('div');
+bootDiv.style.cssText = `
+    position: fixed;
+    inset: 0;
+    background: #000;
+    color: #00ff41;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    padding: 40px;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+`;
+
+document.body.appendChild(bootDiv);
+
+let index = 0;
+const interval = setInterval(() => {
+    if (index < messages.length) {
+      bootDiv.innerHTML += `> ${messages[index]}<br>`;
+      index++;
+    } else {
+      clearInterval(interval);
+      setTimeout(() => {
+        bootDiv.style.opacity = '0';
+        bootDiv.style.transition = 'opacity 0.5s';
+        setTimeout(() => bootDiv.remove(), 500);
+      }, 500);
+    }
+}, 400);
+}
+
+
+// ══════════════════════════════════════════════
+// ENHANCED SLIDE TRANSITIONS
+// ══════════════════════════════════════════════
+const originalGoTo = goTo;
+goTo = function(n) {
+// Play typing sound on navigation
+if (typeof playTypingSound === 'function') {
+    playTypingSound();
+}
+
+// Call original function
+originalGoTo(n);
+
+// Add glitch effect
+const activeSlide = slides[n];
+if (activeSlide) {
+    setTimeout(() => {
+      activeSlide.style.animation = 'glitch 0.3s ease-in-out';
+      setTimeout(() => {
+        activeSlide.style.animation = '';
+      }, 300);
+    }, 100);
+}
+};
+
+// ══════════════════════════════════════════════
+// INITIALIZE EFFECTS
+// ══════════════════════════════════════════════
+window.addEventListener('load', () => {
+// Boot sequence (optional - auskommentieren wenn zu viel)
+// bootSequence();
+
+// Matrix rain effect
+createMatrixRain();
+
+// Add CRT glow to canvas
+const canvas = document.getElementById('atomCanvas');
+canvas.style.filter = 'drop-shadow(0 0 30px rgba(0,255,65,0.5)) contrast(1.1)';
+});
+
+// ══════════════════════════════════════════════
+// KONAMI CODE EASTER EGG
+// ══════════════════════════════════════════════
+let konamiCode = [];
+const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+
+document.addEventListener('keydown', (e) => {
+konamiCode.push(e.key);
+konamiCode = konamiCode.slice(-10);
+
+if (konamiCode.join(',') === konamiSequence.join(',')) {
+    // Easter egg: Intensify all effects
+    document.body.style.animation = 'crt-flicker 0.1s infinite';
+    document.querySelectorAll('.slide h1').forEach(h1 => {
+      h1.style.animation = 'glitch 0.2s infinite';
+    });
+    
+    setTimeout(() => {
+      document.body.style.animation = 'crt-flicker 4s infinite';
+      document.querySelectorAll('.slide h1').forEach(h1 => {
+        h1.style.animation = '';
+      });
+    }, 3000);
+}
+});
+
 // init
 transitionAtom('none');
 document.getElementById('atom-label').textContent = atomConfigs['none']?.label || '';
