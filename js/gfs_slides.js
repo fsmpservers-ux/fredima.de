@@ -492,30 +492,6 @@ const interval = setInterval(() => {
 }
 
 
-// ══════════════════════════════════════════════
-// ENHANCED SLIDE TRANSITIONS
-// ══════════════════════════════════════════════
-const originalGoTo = goTo;
-goTo = function(n) {
-// Play typing sound on navigation
-if (typeof playTypingSound === 'function') {
-    playTypingSound();
-}
-
-// Call original function
-originalGoTo(n);
-
-// Add glitch effect
-const activeSlide = slides[n];
-if (activeSlide) {
-    setTimeout(() => {
-      activeSlide.style.animation = 'glitch 0.3s ease-in-out';
-      setTimeout(() => {
-        activeSlide.style.animation = '';
-      }, 300);
-    }, 100);
-}
-};
 
 // ══════════════════════════════════════════════
 // INITIALIZE EFFECTS
