@@ -87,12 +87,11 @@ const TRANSITION_DURATION = 60; // frames
 
 function transitionAtom(newType) {
   if (newType === toType) return;
-    createTransitionParticles(toType, newType); // NEU
-    fromType = toType;
-    toType = newType;
-    transitioning = true;
-    transitionT = 0;
-    document.getElementById('atom-label').textContent = atomConfigs[newType]?.label || '';
+  fromType = toType;
+  toType = newType;
+  transitioning = true;
+  transitionT = 0;
+  document.getElementById('atom-label').textContent = atomConfigs[newType]?.label || '';
 }
 
 // ─── DRAW FUNCTIONS ───────────────────────────
@@ -445,58 +444,11 @@ function render() {
   } else {
     if (drawFns[toType]) drawFns[toType](1.0, animT);
   }
-  particles = particles.filter(p => p.life > 0);
-  particles.forEach(p => {
-    p.update();
-    p.draw(ctx);
-  });
 
   requestAnimationFrame(render);
 }
 
-// Partikel-System
-let particles = [];
 
-class Particle {
-  constructor(x, y, vx, vy, color) {
-    this.x = x;
-    this.y = y;
-    this.vx = vx;
-    this.vy = vy;
-    this.color = color;
-    this.life = 1.0;
-    this.size = Math.random() * 3 + 1;
-  }
-  
-  update() {
-    this.x += this.vx;
-    this.y += this.vy;
-    this.vy += 0.1; // Gravitation
-    this.life -= 0.02;
-  }
-  
-  draw(ctx) {
-    ctx.globalAlpha = this.life;
-    ctx.fillStyle = this.color;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fill();
-  }
-}
-
-function createTransitionParticles(fromType, toType) {
-  const colors = ['#4af0c8', '#e05aff', '#f5c842', '#ff5c5c'];
-  for (let i = 0; i < 50; i++) {
-    const angle = Math.random() * Math.PI * 2;
-    const speed = Math.random() * 3 + 1;
-    particles.push(new Particle(
-      CX, CY,
-      Math.cos(angle) * speed,
-      Math.sin(angle) * speed,
-      colors[Math.floor(Math.random() * colors.length)]
-    ));
-  }
-}
 
 
 
