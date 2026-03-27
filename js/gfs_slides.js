@@ -87,20 +87,12 @@ const TRANSITION_DURATION = 60; // frames
 
 function transitionAtom(newType) {
   if (newType === toType) return;
-  fromType = toType;
-  toType = newType;
-  transitioning = true;
-  transitionT = 0;
-  document.getElementById('atom-label').textContent = atomConfigs[newType]?.label || '';
-  function transitionAtom(newType) {
-  if (newType === toType) return;
     createTransitionParticles(toType, newType); // NEU
     fromType = toType;
     toType = newType;
     transitioning = true;
     transitionT = 0;
     document.getElementById('atom-label').textContent = atomConfigs[newType]?.label || '';
-}
 }
 
 // ─── DRAW FUNCTIONS ───────────────────────────
