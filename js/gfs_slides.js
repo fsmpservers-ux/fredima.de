@@ -488,32 +488,6 @@ const canvas = document.getElementById('atomCanvas');
 canvas.style.filter = 'drop-shadow(0 0 30px rgba(0,255,65,0.5)) contrast(1.1)';
 });
 
-// ══════════════════════════════════════════════
-// KONAMI CODE EASTER EGG
-// ══════════════════════════════════════════════
-let konamiCode = [];
-const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-
-document.addEventListener('keydown', (e) => {
-konamiCode.push(e.key);
-konamiCode = konamiCode.slice(-10);
-
-if (konamiCode.join(',') === konamiSequence.join(',')) {
-    // Easter egg: Intensify all effects
-    document.body.style.animation = 'crt-flicker 0.1s infinite';
-    document.querySelectorAll('.slide h1').forEach(h1 => {
-      h1.style.animation = 'glitch 0.2s infinite';
-    });
-    
-    setTimeout(() => {
-      document.body.style.animation = 'crt-flicker 4s infinite';
-      document.querySelectorAll('.slide h1').forEach(h1 => {
-        h1.style.animation = '';
-      });
-    }, 3000);
-}
-});
-
 // init
 transitionAtom('none');
 document.getElementById('atom-label').textContent = atomConfigs['none']?.label || '';
