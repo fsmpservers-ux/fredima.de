@@ -471,6 +471,45 @@ const interval = setInterval(() => {
 }, 400);
 }
 
+// Notizen-System
+const slideNotes = {
+  0: "Begrüßung: 2 Min. Kurze Vorstellung und Überblick.",
+  1: "Inhaltsangabe: 1 Min. Struktur erklären.",
+  2: "Demokrit: 3 Min. Philosophischer Ansatz betonen.",
+  // ... für jede Slide
+};
+
+let presentationStartTime = null;
+let timerInterval = null;
+
+// Presenter Mode Toggle (Taste 'P')
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'p' || e.key === 'P') {
+    const notesPanel = document.getElementById('presenter-notes');
+    notesPanel.style.display = notesPanel.style.display === 'none' ? 'block' : 'none';
+    
+    if (notesPanel.style.display === 'block' && !presentationStartTime) {
+      startTimer();
+    }
+  }
+});
+
+function startTimer() {
+  presentationStartTime = Date.now();
+  timerInterval = setInterval(() => {
+    const elapsed = Date.now() - presentationStartTime;
+    const minutes = Math.floor(elapsed / 60000);
+    const seconds = Math.floor((elapsed % 60000) / 1000);
+    document.getElementById('timer').textContent = 
+      `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  }, 1000);
+}
+
+// Update notes on slide change
+function updateNotes(slideIndex) {
+  const notesDiv = document.getElementById('current-notes');
+  notesDiv.textContent = slideNotes[slideIndex] || 'Keine Notizen verfügbar.';
+}
 
 
 // ══════════════════════════════════════════════
