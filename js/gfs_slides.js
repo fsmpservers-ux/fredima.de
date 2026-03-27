@@ -92,6 +92,15 @@ function transitionAtom(newType) {
   transitioning = true;
   transitionT = 0;
   document.getElementById('atom-label').textContent = atomConfigs[newType]?.label || '';
+  function transitionAtom(newType) {
+  if (newType === toType) return;
+    createTransitionParticles(toType, newType); // NEU
+    fromType = toType;
+    toType = newType;
+    transitioning = true;
+    transitionT = 0;
+    document.getElementById('atom-label').textContent = atomConfigs[newType]?.label || '';
+}
 }
 
 // ─── DRAW FUNCTIONS ───────────────────────────
@@ -268,55 +277,78 @@ function drawNeutron(alpha, t) {
   ctx.globalAlpha = 1;
 }
 
-function drawBohr(alpha, t) {
+function drawBohr3D(alpha, t) {
   ctx.globalAlpha = alpha;
   const shells = [
-    { r: 45, electrons: 2, color: '#4af0c8', speed: 0.04 },
-    { r: 80, electrons: 3, color: '#e05aff', speed: 0.025 },
-    { r: 120, electrons: 2, color: '#4af0c8', speed: 0.015 },
+    { r: 45, electrons: 2, tilt: 0, color: '#4af0c8', speed: 0.04 },
+    { r: 80, electrons: 3, tilt: Math.PI / 3, color: '#e05aff', speed: 0.025 },
+    { r: 120, electrons: 2, tilt: Math.PI / 2, color: '#4af0c8', speed: 0.015 },
   ];
+  
   shells.forEach((sh, si) => {
-    // orbit ring
-    ctx.strokeStyle = `rgba(255,255,255,${0.12 * alpha})`;
-    ctx.lineWidth = 1;
+    ctx.save();
+    ctx.translate(CX, CY);
+    
+    // 3D Ellipse mit Perspektive
+    const perspective = 0.4;
+    ctx.scale(1, perspective + Math.abs(Math.sin(sh.tilt)) * (1 - perspective));
+    
+    // Orbit
+    ctx.strokeStyle = `rgba(255,255,255,${0.15 * alpha})`;
+    ctx.lineWidth = 2;
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = sh.color;
     ctx.beginPath();
-    ctx.arc(CX, CY, sh.r, 0, Math.PI * 2);
+    ctx.arc(0, 0, sh.r, 0, Math.PI * 2);
     ctx.stroke();
-    // electrons
+    ctx.shadowBlur = 0;
+    
+    // Elektronen mit Tiefeneffekt
     for (let e = 0; e < sh.electrons; e++) {
       const angle = t * sh.speed + (e / sh.electrons) * Math.PI * 2;
-      const ex = CX + Math.cos(angle) * sh.r;
-      const ey = CY + Math.sin(angle) * sh.r;
-      // trail
-      for (let tr = 1; tr <= 6; tr++) {
-        const ta = angle - tr * 0.12;
-        const tx = CX + Math.cos(ta) * sh.r;
-        const ty = CY + Math.sin(ta) * sh.r;
-        ctx.fillStyle = sh.color;
-        ctx.globalAlpha = alpha * (0.06 * (7 - tr) / 7);
-        ctx.beginPath();
-        ctx.arc(tx, ty, 4, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      ctx.globalAlpha = alpha;
+      const ex = Math.cos(angle) * sh.r;
+      const ey = Math.sin(angle) * sh.r;
+      
+      // Z-Position für Größenänderung
+      const z = Math.sin(angle + sh.tilt);
+      const scale = 0.7 + (z + 1) * 0.3;
+      
+      // Glow-Effekt
+      const glow = ctx.createRadialGradient(ex, ey, 0, ex, ey, 15 * scale);
+      glow.addColorStop(0, sh.color);
+      glow.addColorStop(1, 'rgba(74,240,200,0)');
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(ex, ey, 15 * scale, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Elektron
       ctx.fillStyle = sh.color;
       ctx.beginPath();
-      ctx.arc(ex, ey, 5.5, 0, Math.PI * 2);
+      ctx.arc(ex, ey, 6 * scale, 0, Math.PI * 2);
       ctx.fill();
     }
+    
+    ctx.restore();
   });
-  // nucleus
-  const ng = ctx.createRadialGradient(CX - 4, CY - 4, 1, CX, CY, 16);
+  
+  // Nucleus mit Pulsation
+  const pulse = 1 + Math.sin(t * 0.05) * 0.1;
+  const ng = ctx.createRadialGradient(CX - 4, CY - 4, 1, CX, CY, 16 * pulse);
   ng.addColorStop(0, '#fff');
   ng.addColorStop(0.3, '#f5c842');
   ng.addColorStop(1, '#c08010');
   ctx.globalAlpha = alpha;
   ctx.fillStyle = ng;
+  ctx.shadowBlur = 20;
+  ctx.shadowColor = '#f5c842';
   ctx.beginPath();
-  ctx.arc(CX, CY, 14, 0, Math.PI * 2);
+  ctx.arc(CX, CY, 14 * pulse, 0, Math.PI * 2);
   ctx.fill();
+  ctx.shadowBlur = 0;
   ctx.globalAlpha = 1;
 }
+
 
 function drawQuantum(alpha, t) {
   ctx.globalAlpha = alpha;
@@ -421,6 +453,11 @@ function render() {
   } else {
     if (drawFns[toType]) drawFns[toType](1.0, animT);
   }
+  particles = particles.filter(p => p.life > 0);
+  particles.forEach(p => {
+    p.update();
+    p.draw(ctx);
+  });
 
   requestAnimationFrame(render);
 }
@@ -469,23 +506,7 @@ function createTransitionParticles(fromType, toType) {
   }
 }
 
-// In transitionAtom() einfügen:
-function transitionAtom(newType) {
-  if (newType === toType) return;
-  createTransitionParticles(toType, newType); // NEU
-  fromType = toType;
-  toType = newType;
-  transitioning = true;
-  transitionT = 0;
-  document.getElementById('atom-label').textContent = atomConfigs[newType]?.label || '';
-}
 
-// In render() vor requestAnimationFrame:
-particles = particles.filter(p => p.life > 0);
-particles.forEach(p => {
-  p.update();
-  p.draw(ctx);
-});
 
 
 // init
