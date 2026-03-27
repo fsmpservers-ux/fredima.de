@@ -7,38 +7,38 @@ const nextBtn = document.getElementById('nextBtn');
 const counter = document.getElementById('slide-counter');
 const progressBar = document.getElementById('progress-bar');
 let current = 0;
-
+ 
 function goTo(n) {
   if (n < 0 || n >= slides.length) return;
   slides[current].classList.remove('active');
   slides[current].classList.add('out-left');
   setTimeout(() => slides[current - (n > current ? 1 : -1) + (n > current ? 1 : -1)].classList.remove('out-left'), 600);
-
+ 
   // more robust cleanup
   slides.forEach(s => s.classList.remove('active', 'out-left'));
-
+ 
   current = n;
   slides[current].classList.add('active');
-
+ 
   counter.textContent = `${current + 1} / ${slides.length}`;
   progressBar.style.width = `${((current) / (slides.length - 1)) * 100}%`;
   prevBtn.disabled = current === 0;
   nextBtn.disabled = current === slides.length - 1;
-
+ 
   // update atom
   const atomType = slides[current].dataset.atom || 'none';
   const era = slides[current].dataset.era || '';
   document.getElementById('atom-era').textContent = era;
   transitionAtom(atomType);
 }
-
+ 
 prevBtn.addEventListener('click', () => goTo(current - 1));
 nextBtn.addEventListener('click', () => goTo(current + 1));
 document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight' || e.key === ' ') goTo(current + 1);
   if (e.key === 'ArrowLeft') goTo(current - 1);
 });
-
+ 
 // ══════════════════════════════════════════════
 // 3D ATOM CANVAS
 // ══════════════════════════════════════════════
@@ -46,7 +46,7 @@ const canvas = document.getElementById('atomCanvas');
 const ctx = canvas.getContext('2d');
 const W = canvas.width, H = canvas.height;
 const CX = W / 2, CY = H / 2;
-
+ 
 let atomState = {
   type: 'none',
   targetType: 'none',
@@ -54,7 +54,7 @@ let atomState = {
   t: 0,
   transitionFrom: null,
 };
-
+ 
 const COLORS = {
   nucleus: '#f5c842',
   proton: '#ff5c5c',
@@ -64,7 +64,7 @@ const COLORS = {
   cloud: 'rgba(74,240,200,',
   orbit: 'rgba(74,240,200,',
 };
-
+ 
 // atom definitions
 const atomConfigs = {
   none: { label: '— Kein Modell —' },
@@ -76,7 +76,7 @@ const atomConfigs = {
   bohr: { label: 'Bohrsches Schalenmodell (1913)' },
   quantum: { label: 'Quantenmechanisches Modell (heute)' },
 };
-
+ 
 let animT = 0;
 let transitionAlpha = 1;
 let fromType = 'none';
@@ -84,20 +84,18 @@ let toType = 'none';
 let transitioning = false;
 let transitionT = 0;
 const TRANSITION_DURATION = 60; // frames
-
+ 
 function transitionAtom(newType) {
   if (newType === toType) return;
-    createTransitionParticles(toType, newType); // NEU
-    fromType = toType;
-    toType = newType;
-    transitioning = true;
-    transitionT = 0;
-    document.getElementById('atom-label').textContent = atomConfigs[newType]?.label || '';
+  fromType = toType;
+  toType = newType;
+  transitioning = true;
+  transitionT = 0;
+  document.getElementById('atom-label').textContent = atomConfigs[newType]?.label || '';
 }
-
-
+ 
 // ─── DRAW FUNCTIONS ───────────────────────────
-
+ 
 function drawNone(alpha) {
   ctx.globalAlpha = alpha * 0.3;
   ctx.strokeStyle = COLORS.orbit + '0.3)';
@@ -114,7 +112,7 @@ function drawNone(alpha) {
   ctx.fill();
   ctx.globalAlpha = 1;
 }
-
+ 
 function drawDemokrit(alpha, t) {
   const wobble = Math.sin(t * 0.03) * 5;
   // glowing sphere
@@ -139,7 +137,7 @@ function drawDemokrit(alpha, t) {
   ctx.fillText('ἄτομος', CX, CY + 5);
   ctx.globalAlpha = 1;
 }
-
+ 
 function drawDalton(alpha, t) {
   ctx.globalAlpha = alpha;
   const r = 68 + Math.sin(t * 0.02) * 3;
@@ -157,7 +155,7 @@ function drawDalton(alpha, t) {
   ctx.stroke();
   ctx.globalAlpha = 1;
 }
-
+ 
 function drawThomson(alpha, t) {
   ctx.globalAlpha = alpha;
   // positive blob
@@ -193,7 +191,7 @@ function drawThomson(alpha, t) {
   });
   ctx.globalAlpha = 1;
 }
-
+ 
 function drawRutherford(alpha, t) {
   ctx.globalAlpha = alpha;
   // orbits
@@ -230,7 +228,7 @@ function drawRutherford(alpha, t) {
   ctx.fill();
   ctx.globalAlpha = 1;
 }
-
+ 
 function drawNeutron(alpha, t) {
   ctx.globalAlpha = alpha;
   // same orbits as rutherford but nucleus shows protons + neutrons
@@ -269,7 +267,7 @@ function drawNeutron(alpha, t) {
   });
   ctx.globalAlpha = 1;
 }
-
+ 
 function drawBohr(alpha, t) {
   ctx.globalAlpha = alpha;
   const shells = [
@@ -319,7 +317,7 @@ function drawBohr(alpha, t) {
   ctx.fill();
   ctx.globalAlpha = 1;
 }
-
+ 
 function drawQuantum(alpha, t) {
   ctx.globalAlpha = alpha;
   // probability cloud – multiple gaussian blobs
@@ -354,13 +352,13 @@ function drawQuantum(alpha, t) {
       c: 2
     });
   }
-
+ 
   cloudData.forEach(pt => {
     const colors = ['rgba(74,240,200,', 'rgba(224,90,255,', 'rgba(245,200,66,'];
     ctx.fillStyle = colors[pt.c] + (0.025 * alpha) + ')';
     ctx.fillRect(pt.x, pt.y, 1.5, 1.5);
   });
-
+ 
   // nucleus
   const ng = ctx.createRadialGradient(CX, CY, 0, CX, CY, 8);
   ng.addColorStop(0, '#fff');
@@ -373,14 +371,14 @@ function drawQuantum(alpha, t) {
   ctx.fill();
   ctx.globalAlpha = 1;
 }
-
+ 
 function gaussRand() {
   let u = 0, v = 0;
   while (u === 0) u = Math.random();
   while (v === 0) v = Math.random();
   return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
 }
-
+ 
 const drawFns = {
   none: drawNone,
   demokrit: drawDemokrit,
@@ -391,12 +389,12 @@ const drawFns = {
   bohr: drawBohr,
   quantum: drawQuantum,
 };
-
+ 
 // ─── MAIN LOOP ────────────────────────────────
 function render() {
   ctx.clearRect(0, 0, W, H);
   animT++;
-
+ 
   // grid bg
   ctx.strokeStyle = 'rgba(74,240,200,0.04)';
   ctx.lineWidth = 1;
@@ -406,103 +404,27 @@ function render() {
   for (let y = 0; y < H; y += 30) {
     ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
   }
-
+ 
   if (transitioning) {
     transitionT++;
     const p = Math.min(transitionT / TRANSITION_DURATION, 1);
     const ease = p < 0.5 ? 2 * p * p : -1 + (4 - 2 * p) * p;
-
+ 
     // fade out old, fade in new
     const alphaOut = 1 - ease;
     const alphaIn = ease;
-
+ 
     if (drawFns[fromType]) drawFns[fromType](alphaOut, animT);
     if (drawFns[toType]) drawFns[toType](alphaIn, animT);
-
+ 
     if (p >= 1) transitioning = false;
   } else {
     if (drawFns[toType]) drawFns[toType](1.0, animT);
   }
-  particles = particles.filter(p => p.life > 0);
-  particles.forEach(p => {
-    p.update();
-    p.draw(ctx);
-  });
-
-  energyWaves = energyWaves.filter(w => w.alpha > 0);
-  energyWaves.forEach(w => {
-    w.r += 3;
-    w.alpha -= 0.015;
-    
-    ctx.globalAlpha = w.alpha * 0.3;
-    ctx.strokeStyle = '#4af0c8';
-    ctx.lineWidth = 2;
-    ctx.setLineDash([5, 5]);
-    ctx.beginPath();
-    ctx.arc(CX, CY, w.r, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.setLineDash([]);
-  });
-  ctx.globalAlpha = 1;
-
+ 
   requestAnimationFrame(render);
 }
-
-// Partikel-System
-let particles = [];
-
-class Particle {
-  constructor(x, y, vx, vy, color) {
-    this.x = x;
-    this.y = y;
-    this.vx = vx;
-    this.vy = vy;
-    this.color = color;
-    this.life = 1.0;
-    this.size = Math.random() * 3 + 1;
-  }
-  
-  update() {
-    this.x += this.vx;
-    this.y += this.vy;
-    this.vy += 0.1; // Gravitation
-    this.life -= 0.02;
-  }
-  
-  draw(ctx) {
-    ctx.globalAlpha = this.life;
-    ctx.fillStyle = this.color;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fill();
-  }
-}
-
-function createTransitionParticles(fromType, toType) {
-  const colors = ['#4af0c8', '#e05aff', '#f5c842', '#ff5c5c'];
-  for (let i = 0; i < 50; i++) {
-    const angle = Math.random() * Math.PI * 2;
-    const speed = Math.random() * 3 + 1;
-    particles.push(new Particle(
-      CX, CY,
-      Math.cos(angle) * speed,
-      Math.sin(angle) * speed,
-      colors[Math.floor(Math.random() * colors.length)]
-    ));
-  }
-}
-
-
-let energyWaves = [];
-
-function createEnergyWave() {
-  energyWaves.push({ r: 0, alpha: 1.0 });
-}
-
-// Alle 2 Sekunden eine Welle
-setInterval(createEnergyWave, 2000);
-
-
+ 
 // init
 transitionAtom('none');
 document.getElementById('atom-label').textContent = atomConfigs['none']?.label || '';
