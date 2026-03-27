@@ -429,6 +429,22 @@ function render() {
     p.draw(ctx);
   });
 
+  energyWaves = energyWaves.filter(w => w.alpha > 0);
+  energyWaves.forEach(w => {
+    w.r += 3;
+    w.alpha -= 0.015;
+    
+    ctx.globalAlpha = w.alpha * 0.3;
+    ctx.strokeStyle = '#4af0c8';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([5, 5]);
+    ctx.beginPath();
+    ctx.arc(CX, CY, w.r, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  });
+  ctx.globalAlpha = 1;
+
   requestAnimationFrame(render);
 }
 
@@ -477,6 +493,14 @@ function createTransitionParticles(fromType, toType) {
 }
 
 
+let energyWaves = [];
+
+function createEnergyWave() {
+  energyWaves.push({ r: 0, alpha: 1.0 });
+}
+
+// Alle 2 Sekunden eine Welle
+setInterval(createEnergyWave, 2000);
 
 
 // init
