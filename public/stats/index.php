@@ -1,6 +1,6 @@
 <?php
 $f = __DIR__ . '/../../data/stats.json';
-$s = file_exists($f) ? json_decode(file_get_contents($f), true) : ['total'=>>0,'daily'=>[],'unique_daily'=>[],'browsers'=>[],'os'=>[]];
+$s = file_exists($f) ? json_decode(file_get_contents($f), true) : ['total'=>0,'daily'=>[],'unique_daily'=>[],'browsers'=>[],'os'=>[]];
 $today = date('Y-m-d');
 $yesterday = date('Y-m-d', strtotime('-1 day'));
 
