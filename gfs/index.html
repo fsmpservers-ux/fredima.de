@@ -5,273 +5,1495 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Atommodelle – GFS Präsentation</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
-<!-- <link rel="stylesheet" href="/style/gfs_styles.css"> -->
-<link rel="stylesheet" href="/style/retro-premium-gfs_styles.css">
+
+<!-- ════════════════════════════════════════════════════════════════
+  📖  GFS PRÄSENTATION – ATOMMODELLE  |  ENTWICKLER-DOKUMENTATION
+  ════════════════════════════════════════════════════════════════
+
+  ① EINE NEUE SLIDE HINZUFÜGEN
+  ─────────────────────────────
+  Kopiere dieses Template und füge es an der gewünschten Stelle
+  innerhalb von <div id="slides-container"> ein:
+
+  <div class="slide"
+       data-atom="MODELL"      ← s. Liste ②
+       data-era="1911"         ← Text oben in der Sidebar
+       data-sidebar="show">    ← "show" oder "hide"
+
+    <div class="slide-tag">Dein Label</div>
+    <h2>Überschrift mit <span class="hl">Highlight</span></h2>
+    <p>Fließtext. <b>Fett</b>. <span class="accent">Grün</span>.
+       <span class="pink">Lila</span>. <span class="gold">Gold</span>.</p>
+
+    <div class="two-col">
+      <div>
+        <ul class="bullet-list">
+          <li><b>Punkt 1</b></li>
+          <li>Punkt 2</li>
+        </ul>
+      </div>
+      <div>
+        <div class="info-box">          ← auch: info-box pink / info-box gold
+          <div class="box-title">Titel</div>
+          <p>Inhalt</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="year-badge">1911</div>  ← optionales Jahreszahl-Wasserzeichen
+  </div>
+
+  ② VERFÜGBARE ATOMMODELLE  (data-atom="...")
+  ─────────────────────────────────────────────
+  none        → Leere Sidebar (Intro, TOC, Quellen)
+  demokrit    → Glühende Philosophen-Kugel mit griechischem Text
+  dalton      → Goldene 3D-Vollkugel
+  thomson     → Orangeblob mit driftenden Elektronen (Rosinen)
+  rutherford  → Elliptische Orbits, Elektronen-Trails, kleiner Kern
+  neutron     → Wie Rutherford + bunter Nucleonen-Cluster im Kern
+  bohr        → 3 Schalen, Leuchtspuren, Farbwechsel pro Schale
+  quantum     → s/p/d-Orbitale als Wolken, rotierende Lappen,
+                Partikelwolke, pulsierender Kern
+
+  ③ TEXT-FARBEN
+  ──────────────
+  In h1/h2:   .hl (Grün)  .hl2 (Lila)  .hl3 (Gold)
+  In Text:    .accent (Grün)  .pink (Lila)  .gold (Gold)  .red  .blue
+  Allgemein:  <b> = helles Weiß
+
+  ④ LAYOUT-BAUSTEINE
+  ────────────────────
+  .slide-tag      Kleines Kategorie-Label oben
+  .slide-number   Dünner Untertitel-Text (z.B. Fach)
+  h1 / h2         Überschriften (h1 für Intro, h2 normal)
+  p               Fließtext (automatisch max-width & Zeilenabstand)
+  .two-col        2 gleichbreite Spalten
+  .bullet-list    Aufzählung mit grünem ▸
+  .info-box       Kasten mit Akzentrand  (.pink / .gold Variante)
+  .year-badge     Großes Jahres-Wasserzeichen rechts unten
+  .toc-grid       2-spaltiges Inhaltsverzeichnis-Raster
+  .toc-item       Einzelner TOC-Eintrag
+  .source-list    Nummerierte Quellenliste (data-n="1")
+  .timeline       Vertikaler Zeitstrahl
+  .timeline-item  Ein Zeitstrahl-Eintrag (year, dot, text)
+  .big-q          Riesiges dekoratives "?"
+  .orbital-hint   Flex-Container für Orbital-Tags
+  .orb-tag        Einzelner Orbital-Tag-Chip
+
+  ⑤ NEUE ATOMMODELLE HINZUFÜGEN
+  ──────────────────────────────
+  Im <script>-Block:
+  1. Neue Funktion: function drawMeinModell(alpha, t) { ... }
+  2. In drawFns-Objekt eintragen: meinModell: drawMeinModell
+  3. In atomMeta eintragen: meinModell: { label: 'Beschreibung' }
+  4. Im Slide: data-atom="meinModell"
+
+  ⑥ FARBEN GLOBAL ANPASSEN (CSS-Variablen in :root)
+  ────────────────────────────────────────────────────
+  --bg       Hintergrund  (Standard: #070b13)
+  --panel    Sidebar-BG   (Standard: #0c1422)
+  --accent   Cyan-Grün    (Standard: #3ee8bb)
+  --accent2  Lila         (Standard: #d45af0)
+  --gold     Gold         (Standard: #f0c030)
+
+  ⑦ TASTENKÜRZEL
+  ───────────────
+  → / Leertaste   Nächste Slide
+  ←               Vorherige Slide
+  F               Vollbild umschalten
+
+════════════════════════════════════════════════════════════════ -->
+
+<style>
+/* ══════════════════════════════════════════════════════
+   GLOBALE CSS-VARIABLEN – hier zentral anpassen
+   ══════════════════════════════════════════════════════ */
+:root {
+  --bg:        #070b13;
+  --panel:     #0c1422;
+  --accent:    #3ee8bb;
+  --accent2:   #d45af0;
+  --gold:      #f0c030;
+  --danger:    #f05a5a;
+  --blue:      #7878f0;
+  --text:      #dde2f4;
+  --muted:     #6a7da0;
+  --border:    rgba(62,232,187,0.14);
+  --sidebar-w: 400px;
+  --pad:       60px;
+}
+
+/* ── Reset ─────────────────────────────────────── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; overflow:hidden; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Space Mono', monospace;
+  display: flex;
+  font-size: 15px;
+}
+
+/* Subtile Scan-Lines */
+body::after {
+  content:'';
+  position:fixed; inset:0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px, transparent 3px,
+    rgba(0,0,0,0.022) 3px, rgba(0,0,0,0.022) 4px
+  );
+  pointer-events:none; z-index:9999;
+}
+
+/* ══════════════════════════════════════════════════════
+   ATOM-SIDEBAR
+   ══════════════════════════════════════════════════════ */
+#atom-sidebar {
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  /* Slide-Animation */
+  transition:
+    width           0.7s cubic-bezier(0.77,0,0.175,1),
+    min-width       0.7s cubic-bezier(0.77,0,0.175,1),
+    opacity         0.4s ease,
+    transform       0.7s cubic-bezier(0.77,0,0.175,1),
+    border-width    0.7s ease;
+}
+#atom-sidebar.hidden {
+  width:0 !important; min-width:0 !important;
+  opacity:0; transform:translateX(-20px);
+  border-right-width:0;
+}
+
+/* Glow-Hintergrund */
+#atom-sidebar::before {
+  content:''; position:absolute; inset:0;
+  background: radial-gradient(ellipse at 50% 50%,
+    rgba(62,232,187,0.055) 0%, transparent 68%);
+  pointer-events:none;
+}
+/* Pulsierender Rand */
+#atom-sidebar::after {
+  content:''; position:absolute;
+  top:0; right:0; width:1px; height:100%;
+  background: linear-gradient(to bottom,
+    transparent, var(--accent) 30%, var(--accent2) 70%, transparent);
+  opacity:0.3;
+  animation: sidebarPulse 4s ease-in-out infinite;
+}
+@keyframes sidebarPulse { 0%,100%{opacity:0.18} 50%{opacity:0.5} }
+
+#atom-era {
+  position:absolute; top:26px; left:0; right:0;
+  text-align:center; font-size:9px; letter-spacing:3px;
+  color:var(--muted); text-transform:uppercase;
+  transition:opacity 0.5s;
+}
+#atom-label {
+  position:absolute; bottom:24px; left:8px; right:8px;
+  text-align:center; font-size:9.5px; letter-spacing:2px;
+  color:var(--accent); text-transform:uppercase;
+  opacity:0.8; line-height:1.6;
+  transition:all 0.6s ease;
+}
+canvas#atomCanvas { display:block; }
+
+/* ══════════════════════════════════════════════════════
+   SLIDES-BEREICH
+   ══════════════════════════════════════════════════════ */
+#slides-area {
+  flex:1; min-width:0;
+  display:flex; flex-direction:column;
+  overflow:hidden; position:relative;
+}
+
+/* Fortschrittsbalken */
+#progress-bar {
+  height:2px;
+  background: linear-gradient(90deg,
+    var(--accent) 0%, var(--accent2) 50%, var(--gold) 100%);
+  background-size:200% 100%;
+  width:0%;
+  flex-shrink:0;
+  transition:width 0.6s cubic-bezier(0.4,0,0.2,1);
+  animation: shimmer 3s linear infinite;
+}
+@keyframes shimmer { 0%{background-position:0%} 100%{background-position:200%} }
+
+#slides-container { flex:1; position:relative; overflow:hidden; }
+
+/* ══════════════════════════════════════════════════════
+   SLIDES – ALLGEMEIN
+   ══════════════════════════════════════════════════════ */
+.slide {
+  position:absolute; inset:0;
+  padding:var(--pad); padding-bottom:28px;
+  display:flex; flex-direction:column; justify-content:center;
+  opacity:0; pointer-events:none;
+  transition: opacity 0.5s ease, transform 0.55s cubic-bezier(0.4,0,0.2,1);
+  transform: translateX(80px) scale(0.985);
+}
+.slide.active   { opacity:1; transform:translateX(0) scale(1); pointer-events:all; }
+.slide.out-left { opacity:0; transform:translateX(-80px) scale(0.985); }
+
+/* ══════════════════════════════════════════════════════
+   SLIDE-BAUSTEINE
+   ══════════════════════════════════════════════════════ */
+
+/* Tag */
+.slide-tag {
+  display:inline-flex; align-items:center;
+  font-size:9.5px; letter-spacing:3px;
+  padding:5px 14px;
+  border:1px solid var(--accent); color:var(--accent);
+  text-transform:uppercase; margin-bottom:18px; width:fit-content;
+}
+
+/* Kategorie-Text */
+.slide-number {
+  font-size:9.5px; letter-spacing:3px;
+  color:var(--muted); margin-bottom:16px; text-transform:uppercase;
+}
+
+/* ── Überschriften ─── */
+.slide h1 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.4rem,4.5vw,4.8rem);
+  font-weight:900; line-height:1.02;
+  margin-bottom:20px; letter-spacing:-0.5px;
+}
+.slide h2 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.55rem,2.6vw,2.7rem);
+  font-weight:700; line-height:1.15; margin-bottom:16px;
+}
+.slide h1 .hl, .slide h2 .hl  { color:var(--accent); }
+.slide h1 .hl2,.slide h2 .hl2 { color:var(--accent2); }
+.slide h1 .hl3,.slide h2 .hl3 { color:var(--gold); }
+
+/* ── Fließtext ─────── */
+.slide p {
+  font-size:13.5px; line-height:1.9;
+  color:var(--muted); max-width:680px; margin-bottom:12px;
+}
+.slide p b, .slide li b { color:var(--text); font-weight:700; }
+.slide .accent { color:var(--accent); }
+.slide .pink   { color:var(--accent2); }
+.slide .gold   { color:var(--gold); }
+.slide .red    { color:var(--danger); }
+.slide .blue   { color:var(--blue); }
+
+/* ── Bullet-Liste ──── */
+.bullet-list { list-style:none; margin-top:4px; margin-bottom:8px; }
+.bullet-list li {
+  font-size:13px; color:var(--muted); line-height:1.8;
+  padding:6px 0 6px 22px; position:relative;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  transition:color 0.2s;
+}
+.bullet-list li:first-child { border-top:1px solid rgba(255,255,255,0.04); }
+.bullet-list li::before { content:'▸'; position:absolute; left:0; color:var(--accent); font-size:11px; }
+.bullet-list li:hover { color:var(--text); }
+
+/* ── Zwei Spalten ──── */
+.two-col {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:26px; margin-top:10px; align-items:start;
+}
+
+/* ── Info-Boxen ─────── */
+.info-box {
+  background:rgba(62,232,187,0.048);
+  border:1px solid rgba(62,232,187,0.12);
+  border-left:3px solid var(--accent);
+  padding:16px 20px; border-radius:2px; margin-bottom:12px;
+}
+.info-box:last-child { margin-bottom:0; }
+.info-box.pink {
+  border-left-color:var(--accent2);
+  background:rgba(212,90,240,0.048);
+  border-color:rgba(212,90,240,0.12);
+}
+.info-box.gold {
+  border-left-color:var(--gold);
+  background:rgba(240,192,48,0.048);
+  border-color:rgba(240,192,48,0.12);
+}
+.info-box .box-title {
+  font-size:9.5px; letter-spacing:2.5px;
+  text-transform:uppercase; color:var(--accent);
+  margin-bottom:9px; font-weight:700;
+}
+.info-box.pink .box-title { color:var(--accent2); }
+.info-box.gold .box-title { color:var(--gold); }
+.info-box p { font-size:13px; margin:0; line-height:1.8; }
+
+/* ── Jahreszahl ─────── */
+.year-badge {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.8rem,5.5vw,5.2rem); font-weight:900;
+  color:transparent; -webkit-text-stroke:1px rgba(62,232,187,0.16);
+  position:absolute; right:var(--pad); bottom:50px;
+  line-height:1; user-select:none; pointer-events:none; letter-spacing:-2px;
+}
+
+/* ══════════════════════════════════════════════════════
+   SPEZIAL-SLIDES
+   ══════════════════════════════════════════════════════ */
+
+/* Intro */
+.slide.intro h1 { font-size:clamp(2.8rem,5.5vw,5.5rem); }
+.subtitle-line {
+  font-size:11px; letter-spacing:5px;
+  color:var(--muted); text-transform:uppercase;
+  margin-bottom:38px;
+  display:flex; align-items:center; gap:12px;
+}
+.subtitle-line::before, .subtitle-line::after {
+  content:''; flex:none; width:28px; height:1px;
+  background:var(--accent); opacity:0.4;
+}
+.gfs-meta { display:flex; gap:34px; margin-top:34px; flex-wrap:wrap; }
+.meta-item { font-size:10.5px; color:var(--muted); letter-spacing:1px; }
+.meta-item span {
+  display:block; color:var(--text);
+  font-size:12.5px; margin-top:5px; letter-spacing:0;
+}
+.intro-decoration {
+  position:absolute; right:var(--pad); top:50%;
+  transform:translateY(-50%);
+  font-family:'Playfair Display',serif;
+  font-size:20vw; font-weight:900;
+  color:transparent; -webkit-text-stroke:1px rgba(62,232,187,0.05);
+  user-select:none; pointer-events:none; line-height:1;
+}
+
+/* TOC */
+.toc-grid { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:12px; }
+.toc-item {
+  display:flex; align-items:center; gap:12px;
+  padding:11px 14px;
+  border:1px solid rgba(255,255,255,0.06);
+  background:rgba(255,255,255,0.02);
+  font-size:11.5px; color:var(--muted);
+  transition:all 0.25s ease; cursor:default; line-height:1.4;
+}
+.toc-item:hover {
+  border-color:var(--border); color:var(--text);
+  background:rgba(62,232,187,0.048); transform:translateX(3px);
+}
+.toc-num { font-size:9.5px; color:var(--accent); opacity:0.8; width:18px; flex-shrink:0; font-weight:700; }
+
+/* Fragen */
+.big-q {
+  font-family:'Playfair Display',serif;
+  font-size:16vw; font-weight:900;
+  color:var(--accent); opacity:0.065;
+  position:absolute; right:36px; top:50%;
+  transform:translateY(-58%); line-height:1;
+  user-select:none; pointer-events:none;
+  animation:floatQ 7s ease-in-out infinite;
+}
+@keyframes floatQ { 0%,100%{transform:translateY(-58%)} 50%{transform:translateY(-62%)} }
+
+/* Quellen */
+.source-list { list-style:none; }
+.source-list li {
+  font-size:11.5px; color:var(--muted);
+  padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.05);
+  line-height:1.7; transition:color 0.2s;
+}
+.source-list li:hover { color:var(--text); }
+.source-list li::before { content:'[' attr(data-n) ']  '; color:var(--accent); font-weight:700; }
+
+/* Orbital-Tags */
+.orbital-hint { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+.orb-tag {
+  font-size:11px; padding:5px 14px;
+  border:1px solid rgba(62,232,187,0.25);
+  color:var(--accent); letter-spacing:1px; border-radius:20px;
+  transition:all 0.25s;
+}
+.orb-tag:hover { background:rgba(62,232,187,0.08); border-color:var(--accent); }
+
+/* Zeitstrahl */
+.timeline { display:flex; flex-direction:column; margin-top:10px; position:relative; }
+.timeline::before {
+  content:''; position:absolute; left:50px; top:0; bottom:0; width:1px;
+  background:linear-gradient(to bottom, var(--accent), var(--accent2));
+  opacity:0.3;
+}
+.timeline-item { display:flex; align-items:flex-start; gap:14px; padding:8px 0; }
+.timeline-year {
+  font-size:10px; color:var(--accent);
+  width:46px; flex-shrink:0;
+  text-align:right; padding-top:3px; font-weight:700;
+}
+.timeline-dot {
+  width:8px; height:8px; border-radius:50%;
+  background:var(--accent); flex-shrink:0; margin-top:4px;
+  box-shadow:0 0 8px var(--accent);
+}
+.timeline-text { font-size:12px; color:var(--muted); line-height:1.6; }
+.timeline-text b { color:var(--text); }
+
+/* ══════════════════════════════════════════════════════
+   NAVIGATION
+   ══════════════════════════════════════════════════════ */
+#controls {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px var(--pad) 16px; gap:18px;
+  border-top:1px solid rgba(255,255,255,0.05); flex-shrink:0;
+}
+#slide-dots { display:flex; gap:6px; align-items:center; flex:1; justify-content:center; }
+.slide-dot {
+  width:5px; height:5px; border-radius:50%;
+  background:rgba(255,255,255,0.13);
+  transition:all 0.3s ease; cursor:pointer;
+}
+.slide-dot.active { background:var(--accent); box-shadow:0 0 8px var(--accent); transform:scale(1.5); }
+.slide-dot:hover:not(.active) { background:rgba(255,255,255,0.32); }
+
+#slide-counter { font-size:10px; color:var(--muted); letter-spacing:2px; flex:0 0 auto; }
+
+.nav-btn {
+  background:none; border:1px solid rgba(255,255,255,0.1);
+  color:var(--text); padding:9px 26px;
+  font-family:'Space Mono',monospace;
+  font-size:10.5px; letter-spacing:2px; text-transform:uppercase;
+  cursor:pointer; transition:all 0.25s ease;
+}
+.nav-btn:hover { border-color:var(--accent); color:var(--accent); }
+.nav-btn:disabled { opacity:0.2; cursor:not-allowed; }
+.nav-btn:disabled:hover { border-color:rgba(255,255,255,0.1); color:var(--text); }
+
+#key-hint {
+  position:fixed; bottom:9px; right:10px;
+  font-size:9px; color:rgba(255,255,255,0.1);
+  letter-spacing:1px; pointer-events:none; z-index:1000;
+}
+</style>
 </head>
 <body>
 
-<!-- ── ATOM SIDEBAR ───────────────────────────────────── -->
+<!-- ════════════════════════════════════════════
+     ATOM-SIDEBAR
+     ════════════════════════════════════════════ -->
 <div id="atom-sidebar">
-  <div id="atom-era">Historisches Modell</div>
-  <canvas id="atomCanvas" width="380" height="380"></canvas>
-  <div id="atom-label">Lade...</div>
+  <div id="atom-era"></div>
+  <canvas id="atomCanvas" width="360" height="360"></canvas>
+  <div id="atom-label"></div>
 </div>
 
-<!-- ── SLIDES AREA ───────────────────────────────────── -->
+<!-- ════════════════════════════════════════════
+     SLIDES
+     ════════════════════════════════════════════ -->
 <div id="slides-area">
   <div id="progress-bar"></div>
   <div id="slides-container">
 
-    <!-- 0: INTRO -->
-    <div class="slide intro active" data-atom="none" data-era="Antike bis heute">
-      <div class="slide-number">GFS · Physik / Chemie</div>
+    <!-- ┌──────────────────────────────────────────
+         │ SLIDE 0 · INTRO
+         │ data-sidebar="hide" → Sidebar unsichtbar
+         └────────────────────────────────────────── -->
+    <div class="slide intro active"
+         data-atom="none" data-era="" data-sidebar="hide">
+
+      <div class="slide-number">GFS · Physik</div>
       <h1>Die Geschichte<br>des <span class="hl">Atoms</span></h1>
       <div class="subtitle-line">Von Demokrit bis zur Quantenmechanik</div>
-      <p>Eine Reise durch 2.500 Jahre Wissenschaftsgeschichte – vom philosophischen Konzept der unteilbaren Materie zum modernen quantenmechanischen Atommodell.</p>
+      <p>Eine Reise durch 2.500 Jahre Wissenschaftsgeschichte –
+         vom philosophischen Konzept der unteilbaren Materie
+         zum modernen quantenmechanischen Atommodell.</p>
       <div class="gfs-meta">
-        <div class="meta-item">Fach:<span>Physik</span></div>
-        <div class="meta-item">Thema:<span>Atommodelle</span></div>
-        <div class="meta-item">Von:<span>Frederick</span></div>
+        <div class="meta-item">Fach<span>Physik / Chemie</span></div>
+        <div class="meta-item">Format<span>GFS</span></div>
+        <div class="meta-item">Thema<span>Atommodelle</span></div>
       </div>
+      <div class="intro-decoration">A</div>
     </div>
 
-    <!-- 1: INHALTSANGABE -->
-    <div class="slide" data-atom="none" data-era="Überblick">
+    <!-- ┌──────────────────────────────────────────
+         │ SLIDE 1 · INHALTSANGABE
+         └────────────────────────────────────────── -->
+    <div class="slide"
+         data-atom="none" data-era="Überblick" data-sidebar="hide">
+
       <div class="slide-tag">Inhaltsangabe</div>
       <h2>Was erwartet euch?</h2>
       <div class="toc-grid">
         <div class="toc-item"><span class="toc-num">01</span>Demokrit – Die erste Atomidee</div>
-        <div class="toc-item"><span class="toc-num">02</span>Dalton – Kugelatom</div>
+        <div class="toc-item"><span class="toc-num">02</span>Dalton – Das Kugelatom</div>
         <div class="toc-item"><span class="toc-num">03</span>Thomson – Entdeckung des Elektrons</div>
-        <div class="toc-item"><span class="toc-num">04</span>Rutherford – Kern & Hülle</div>
-        <div class="toc-item"><span class="toc-num">05</span>Neutronen & Nucleonen</div>
-        <div class="toc-item"><span class="toc-num">06</span>Bohr – Schalenmodell</div>
+        <div class="toc-item"><span class="toc-num">04</span>Rutherford – Kern &amp; Hülle</div>
+        <div class="toc-item"><span class="toc-num">05</span>Neutronen &amp; Nucleonen</div>
+        <div class="toc-item"><span class="toc-num">06</span>Bohr – Das Schalenmodell</div>
         <div class="toc-item"><span class="toc-num">07</span>Quantenmechanisches Modell</div>
-        <div class="toc-item"><span class="toc-num">08</span>Fragen & Feedback</div>
-        <div class="toc-item"><span class="toc-num">09</span>Sources, AI usage and License</div>
+        <div class="toc-item"><span class="toc-num">08</span>Fragen &amp; Quellen</div>
       </div>
     </div>
 
-    <!-- 2: DEMOKRIT -->
-    <div class="slide" data-atom="demokrit" data-era="~450 v. Chr.">
-      <div class="slide-tag">Antike</div>
-      <h2>Demokrit & das <span class="hl">Atom</span></h2>
+    <!-- ┌──────────────────────────────────────────
+         │ SLIDE 2 · DEMOKRIT
+         └────────────────────────────────────────── -->
+    <div class="slide"
+         data-atom="demokrit" data-era="~450 v. Chr." data-sidebar="show">
+
+      <div class="slide-tag">Antike · ~450 v. Chr.</div>
+      <h2>Demokrit &amp; das <span class="hl">Atomos</span></h2>
       <div class="two-col">
         <div>
-          <p>Der griechische Philosoph <b>Demokrit (~460–370 v. Chr.)</b> prägte als erster den Begriff <span class="accent">„Atomos"</span> – altgriechisch für „unteilbar".</p>
-          <p>Er behauptete, dass alle Materie aus winzigen, <b>unteilbaren Teilchen</b> besteht.</p>
+          <p>Der griechische Philosoph <b>Demokrit (~460–370 v. Chr.)</b>
+             prägte als Erster den Begriff <span class="accent">„Atomos"</span>
+             – altgriechisch für <b>„unteilbar"</b>.</p>
+          <p>Er postulierte, dass alle Materie aus winzigen, unteilbaren Teilchen
+             besteht, die sich im leeren Raum (Vakuum) bewegen und kombinieren.</p>
           <ul class="bullet-list">
-            <li><b>Atome</b> sind ewig, unveränderlich und unteilbar</li>
-            <li>Atome sind von <b>leerem Raum</b>umgeben.</li>
-            <li>Er war nicht in der Lage, seine Theorie zu beweisen.</li>
+            <li><b>Atome</b> sind ewig, unveränderlich, absolut unteilbar</li>
+            <li>Unterschieden durch <b>Form, Größe &amp; Anordnung</b></li>
+            <li>Zwischen Atomen: nur <b>leerer Raum</b> (Vakuum)</li>
+            <li>Reine Philosophie – kein experimenteller Beweis!</li>
+            <li>Idee wurde erst 2000 Jahre später wissenschaftlich aufgegriffen</li>
           </ul>
         </div>
-        <div class="info-box">
-          <div class="box-title">Kernaussage</div>
-          <p>„Nichts entsteht aus dem Nichts. Die kleinsten Bausteine der Materie sind unteilbare Körperchen – die Atome."</p>
-          <br><p style="color:var(--accent);font-size:12px;">— Demokrit, ~450 v. Chr.</p>
+        <div>
+          <div class="info-box">
+            <div class="box-title">Kernaussage</div>
+            <p>„Nichts entsteht aus dem Nichts. Die kleinsten Bausteine der Materie
+               sind unteilbare Körperchen – die <span class="accent">Atome</span>."</p>
+            <br>
+            <p style="color:var(--accent);font-size:10px;letter-spacing:1.5px;">
+               — DEMOKRIT, ~450 V. CHR.</p>
+          </div>
+          <div class="info-box gold">
+            <div class="box-title">Historischer Kontext</div>
+            <p>Gleichzeitig lehrte <b>Aristoteles</b> das Gegenteil: Materie sei unendlich
+               teilbar – und setzte sich damit für <b>fast 2000 Jahre</b> durch.</p>
+          </div>
         </div>
       </div>
-      <div class="year-badge">~450</div>
+      <div class="year-badge">450 v.Chr.</div>
     </div>
 
-    <!-- 3: DALTON -->
-    <div class="slide" data-atom="dalton" data-era="1803">
+    <!-- ┌──────────────────────────────────────────
+         │ SLIDE 3 · DALTON
+         └────────────────────────────────────────── -->
+    <div class="slide"
+         data-atom="dalton" data-era="1803" data-sidebar="show">
+
       <div class="slide-tag">1803</div>
       <h2>John <span class="hl3">Dalton</span> – Das Kugelatom</h2>
       <div class="two-col">
         <div>
-          <p>Der britische Chemiker <b>John Dalton (1766–1844)</b> entwickelte 1803 das erste <b>wissenschaftlich fundierte</b> Atommodell – basierend auf chemischen Experimenten.</p>
+          <p>Der britische Chemiker <b>John Dalton (1766–1844)</b> entwickelte 1803
+             das erste <b>wissenschaftlich fundierte</b> Atommodell – basierend auf
+             chemischen Experimenten und Massengesetzen.</p>
           <ul class="bullet-list">
-            <li>Atome sind <b>massiv, hart und undurchdringbar</b></li>
+            <li>Atome sind <b>massiv, hart &amp; undurchdringbar</b> – wie Billardkugeln</li>
             <li>Alle Atome eines Elements sind <b>identisch</b></li>
-            <li>Atome verschiedener Elemente haben <b>verschiedene Massen</b></li>
+            <li>Verschiedene Elemente → <b>verschiedene Atommassen</b></li>
+            <li>Atome verbinden sich in <b>ganzzahligen Verhältnissen</b></li>
             <li>Chemische Reaktionen = <b>Neuanordnung von Atomen</b></li>
+            <li>Atome werden <b>weder erzeugt noch vernichtet</b></li>
           </ul>
         </div>
         <div>
           <div class="info-box gold">
             <div class="box-title">Modellvorstellung</div>
-            <p>Er stellt sich das Atom als <b>feste, unteilbare Kugel</b> vor.</p>
+            <p>Das Atom als <b>feste, unteilbare, massive Kugel</b>.
+               Kein innerer Aufbau, keine Substruktur – wie ein Billardball.</p>
           </div>
-          <br>
+          <div class="info-box gold">
+            <div class="box-title">Leistung &amp; Grenzen</div>
+            <p>Erklärt Gesetze der Stöchiometrie perfekt. Aber: <b>kein innerer Aufbau</b>
+               bekannt. Was hält Atome zusammen?</p>
+          </div>
         </div>
       </div>
       <div class="year-badge">1803</div>
     </div>
 
-    <!-- 4: THOMSON -->
-    <div class="slide" data-atom="thomson" data-era="1897">
+    <!-- ┌──────────────────────────────────────────
+         │ SLIDE 4 · THOMSON
+         └────────────────────────────────────────── -->
+    <div class="slide"
+         data-atom="thomson" data-era="1897" data-sidebar="show">
+
       <div class="slide-tag">1897</div>
       <h2>J.J. <span class="hl2">Thomson</span> – Das Elektron</h2>
       <div class="two-col">
         <div>
-          <p><b>Joseph John Thomson (1856–1940)</b> entdeckte 1897 mit dem <span class="pink">Kathodenstrahlrohr-Experiment</span> das <b>Elektron</b> – das erste Subatomare Teilchen.</p>
+          <p><b>Joseph John Thomson (1856–1940)</b> entdeckte 1897 mit dem
+             <span class="pink">Kathodenstrahlrohr-Experiment</span> das <b>Elektron</b>
+             – das erste subatomare Teilchen überhaupt.</p>
           <ul class="bullet-list">
-            <li>Elektronen sind <b>negativ geladen</b></li>
-            <li>Elektronen sind viel leichter als Atome</li>
-            <li>Das Atom ist <b>nicht unteilbar</b>! (Damit widerlegt er Dalton)</li>
+            <li>Elektronen sind <b>negativ geladen</b> (q = −1,6 × 10⁻¹⁹ C)</li>
+            <li>Elektronen ~1836× leichter als ein Wasserstoffatom</li>
+            <li>Das Atom ist <b>nicht unteilbar</b> → Dalton widerlegt!</li>
             <li>Atome sind nach außen <b>elektrisch neutral</b></li>
+            <li>→ Es muss eine <b>positive Ladung</b> im Atom geben</li>
           </ul>
         </div>
         <div>
           <div class="info-box pink">
             <div class="box-title">Rosinenkuchenmodell</div>
-            <p>Das Atom als <b>positiv geladene Masse</b>, in der Elektronen wie Rosinen im Kuchen eingebettet sind.</p>
+            <p>Das Atom als <b>positiv geladene, gleichmäßig verteilte Masse</b>,
+               in der Elektronen wie <b>Rosinen im Kuchen</b> eingebettet sind.</p>
           </div>
-          <br>
+          <div class="info-box pink">
+            <div class="box-title">Nobelpreis 1906</div>
+            <p>Thomson erhielt den Nobelpreis für Physik. Ironischerweise gewann
+               sein Sohn <b>G.P. Thomson</b> später den Preis für den
+               <b>Wellen</b>charakter des Elektrons.</p>
+          </div>
         </div>
       </div>
       <div class="year-badge">1897</div>
     </div>
 
-    <!-- 5: RUTHERFORD -->
-    <div class="slide" data-atom="rutherford" data-era="1911">
+    <!-- ┌──────────────────────────────────────────
+         │ SLIDE 5 · RUTHERFORD
+         └────────────────────────────────────────── -->
+    <div class="slide"
+         data-atom="rutherford" data-era="1911" data-sidebar="show">
+
       <div class="slide-tag">1911</div>
-      <h2><span class="hl">Rutherford</span> – Kern & Hülle</h2>
+      <h2><span class="hl">Rutherford</span> – Kern &amp; Hülle</h2>
       <div class="two-col">
         <div>
-          <p><b>Ernest Rutherford (1871–1937)</b> beschoss 1911 im berühmten <span class="accent">Goldfolienexperiment</span> dünne Goldfolie mit Alpha-Teilchen und revolutionierte die Atomphysik.</p>
+          <p><b>Ernest Rutherford (1871–1937)</b> beschoss 1911 im berühmten
+             <span class="accent">Goldfolienexperiment</span> eine dünne Goldfolie
+             mit α-Teilchen und revolutionierte die Atomphysik.</p>
           <ul class="bullet-list">
-            <li>Entdeckung des <b>Atomkerns</b> – winzig, aber sehr schwer</li>
-            <li>Der Kern ist <b>positiv geladen</b></li>
+            <li>Entdeckung des <b>Atomkerns</b> – winzig, aber extrem schwer</li>
+            <li>Der Kern ist <b>positiv geladen</b> (enthält fast alle Masse)</li>
             <li>Elektronen umkreisen den Kern wie <b>Planeten die Sonne</b></li>
-            <li>Das Atom besteht zum Großteil aus <b>leerem Raum</b></li>
+            <li>Das Atom besteht zu <b>99,99 % aus leerem Raum</b></li>
+            <li>Kern-Ø ~10⁻¹⁵ m, Atom-Ø ~10⁻¹⁰ m (Faktor 100.000!)</li>
           </ul>
         </div>
         <div>
           <div class="info-box">
             <div class="box-title">Goldfolienexperiment</div>
-            <p>Die meisten Alpha-Teilchen flogen durch die Folie – aber <b>einige wurden stark abgelenkt</b>. Das bewies einen kompakten, positiven Kern.</p>
+            <p>Die meisten α-Teilchen flogen durch – aber <b>einige wurden stark
+               abgelenkt</b>, manche sogar zurückgeworfen. Beweis für einen
+               <b>kompakten, positiven Atomkern</b>.</p>
           </div>
-          <br>
+          <div class="info-box" style="border-left-color:var(--danger);">
+            <div class="box-title" style="color:var(--danger);">Problem des Modells</div>
+            <p>Beschleunigte Elektronen sollten Energie abstrahlen und
+               <b>spiralförmig in den Kern stürzen</b> (~10⁻¹⁰ s).
+               Die Stabilität von Atomen bleibt unerklärbar.</p>
+          </div>
         </div>
       </div>
       <div class="year-badge">1911</div>
     </div>
 
-    <!-- 6: NEUTRONEN -->
-    <div class="slide" data-atom="neutron" data-era="1932">
-      <div class="slide-tag">1932</div>
-      <h2>Neutronen & <span class="hl3">Nucleonen</span></h2>
+    <!-- ┌──────────────────────────────────────────
+         │ SLIDE 6 · NEUTRONEN & NUCLEONEN
+         └────────────────────────────────────────── -->
+    <div class="slide"
+         data-atom="neutron" data-era="1920 – 1932" data-sidebar="show">
+
+      <div class="slide-tag">1920 – 1932</div>
+      <h2>Protonen, Neutronen &amp; <span class="hl3">Nucleonen</span></h2>
       <div class="two-col">
         <div>
-          <p><b>James Chadwick (1891–1974)</b> entdeckte 1932 das <span class="gold">Neutron</span> – ein neutrales Teilchen im Atomkern. Damit war der Kern vollständig beschrieben.</p>
+          <p><b>Rutherford</b> entdeckte 1920 das <span class="accent">Proton</span>.
+             <b>James Chadwick (1891–1974)</b> entdeckte 1932 das
+             <span class="gold">Neutron</span> – ein neutrales Teilchen im Atomkern.
+             Damit war der Kern vollständig beschrieben.</p>
           <ul class="bullet-list">
-            <li><b>Protonen</b>: positiv geladen, im Kern</li>
-            <li><b>Neutronen</b>: elektrisch neutral, im Kern</li>
-            <li><b>Elektronen</b>: negativ geladen, in der Hülle</li>
-            <li>Protonen & Neutronen = <b>Nucleonen</b> (lat. nucleus = Kern)</li>
-            <li>Massenzahl = Anzahl der <b>Nucleonen</b></li>
+            <li><b style="color:var(--danger);">Protonen</b> – positiv geladen, im Kern (Ordnungszahl Z)</li>
+            <li><b style="color:var(--blue);">Neutronen</b> – elektrisch neutral, im Kern (Stabilität)</li>
+            <li><b style="color:var(--accent);">Elektronen</b> – negativ geladen, in der Hülle</li>
+            <li>Protonen + Neutronen = <b>Nucleonen</b> (lat. nucleus = Kern)</li>
+            <li>Massenzahl A = Z (Protonen) + N (Neutronen)</li>
           </ul>
         </div>
         <div>
           <div class="info-box gold">
-            <div class="box-title">Nucleonen</div>
-            <p>Der Begriff <b>„Nucleonen"</b> fasst alle Kernteilchen zusammen – Protonen und Neutronen – da beide im Atomkern vorkommen.</p>
+            <div class="box-title">Nucleonen – Definition</div>
+            <p>Der Begriff <b>„Nucleonen"</b> fasst alle Kernteilchen zusammen:
+               Protonen und Neutronen – weil beide im <b>Atomkern</b> (Nucleus) vorkommen.</p>
           </div>
-          <br>
+          <div class="info-box gold">
+            <div class="box-title">Nobelpreis 1935</div>
+            <p>Chadwick erhielt den Physik-Nobelpreis. Ohne Neutronen könnten
+               schwere Atomkerne <b>nicht stabil existieren</b>.</p>
+          </div>
         </div>
       </div>
       <div class="year-badge">1932</div>
     </div>
 
-    <!-- 7: BOHR -->
-    <div class="slide" data-atom="bohr" data-era="1913">
+    <!-- ┌──────────────────────────────────────────
+         │ SLIDE 7 · BOHR
+         └────────────────────────────────────────── -->
+    <div class="slide"
+         data-atom="bohr" data-era="1913" data-sidebar="show">
+
       <div class="slide-tag">1913</div>
       <h2>Niels <span class="hl2">Bohr</span> – Das Schalenmodell</h2>
       <div class="two-col">
         <div>
-          <p><b>Niels Bohr (1885–1962)</b> kombinierte 1913 Rutherfords Kernatom mit der Quantentheorie von Planck und Einstein zum <span class="pink">Bohrschen Atommodell</span>.</p>
+          <p><b>Niels Bohr (1885–1962)</b> kombinierte 1913 Rutherfords Kernatom
+             mit der <span class="pink">Quantentheorie</span> von Planck und Einstein
+             zum Bohrschen Atommodell.</p>
           <ul class="bullet-list">
             <li>Elektronen bewegen sich auf <b>festen, kreisförmigen Bahnen</b></li>
-            <li>Jede Bahn entspricht einem festen <b>Energieniveau (Schale)</b></li>
-            <li>Elektronen können <b>springen</b> – aber nur zwischen Schalen</li>
-            <li>Beim Sprung wird <b>Licht emittiert oder absorbiert</b></li>
+            <li>Jede Bahn = festes <b>Energieniveau (Schale)</b> – quantisiert!</li>
+            <li>Elektronen können zwischen Schalen <b>springen</b></li>
+            <li>Energieaufnahme → Sprung nach <b>außen</b> (Anregung)</li>
+            <li>Energieabgabe → Sprung nach <b>innen</b> + Lichtphoton</li>
+            <li>Erklärt das <b>Wasserstoff-Spektrum</b> perfekt!</li>
           </ul>
         </div>
         <div>
           <div class="info-box pink">
             <div class="box-title">Quantensprung</div>
-            <p>Elektronen strahlen <b>keine Energie ab</b> solange sie auf ihrer Bahn bleiben. Erst beim Schalenübergang wird Energie (Licht) frei.</p>
+            <p>Elektronen strahlen <b>keine Energie ab</b>, solange sie auf ihrer
+               Bahn bleiben. Erst beim Schalenübergang wird Energie (Licht) frei:
+               <b>E = h · f</b></p>
           </div>
-          <br>
+          <div class="info-box pink" style="border-left-color:var(--danger);">
+            <div class="box-title" style="color:var(--danger);">Grenzen des Modells</div>
+            <p>Funktioniert <b>nur für Wasserstoff</b>. Für mehrere Elektronen,
+               Moleküle und komplexe Spektren braucht man die vollständige
+               <b>Quantenmechanik</b>.</p>
+          </div>
         </div>
       </div>
       <div class="year-badge">1913</div>
     </div>
 
-    <!-- 8: QUANTENMECHANIK -->
-    <div class="slide" data-atom="quantum" data-era="1926 – heute">
-      <div class="slide-tag">Modern</div>
+    <!-- ┌──────────────────────────────────────────
+         │ SLIDE 8 · QUANTENMECHANIK
+         └────────────────────────────────────────── -->
+    <div class="slide"
+         data-atom="quantum" data-era="1926 – heute" data-sidebar="show">
+
+      <div class="slide-tag">Modern · 1926 – heute</div>
       <h2>Das <span class="hl">Quantenmechanische</span> Atommodell</h2>
       <div class="two-col">
         <div>
-          <p>Heisenberg, Schrödinger & de Broglie entwickelten in den 1920ern das <span class="accent">quantenmechanische Modell</span> – das bis heute gültige Bild des Atoms.</p>
+          <p><b>Heisenberg, Schrödinger &amp; de Broglie</b> entwickelten in den 1920ern
+             das <span class="accent">quantenmechanische Modell</span> – das bis heute
+             präziseste Bild des Atoms.</p>
           <ul class="bullet-list">
-            <li>Keine festen Bahnen, sondern <b>Orbitale</b> (Aufenthaltswahrscheinlichkeiten)</li>
-            <li><b>Heisenbergsche Unschärferelation</b>: Ort & Impuls nicht gleichzeitig exakt messbar</li>
-            <li>Elektronen haben <b>Wellencharakter</b> (de Broglie)</li>
-            <li>Orbitale haben verschiedene <b>Formen</b>: s, p, d, f</li>
-            <li>Beschreibt alle Atome und Moleküle korrekt</li>
+            <li>Keine festen Bahnen – stattdessen <b>Orbitale</b> (Aufenthaltswahrscheinlichkeit)</li>
+            <li><b>Heisenbergsche Unschärferelation:</b> Δx · Δp ≥ ℏ/2</li>
+            <li>Elektronen haben <b>Wellencharakter</b> (de Broglie: λ = h/p)</li>
+            <li>Schrödinger-Gleichung beschreibt <b>Wellenfunktion ψ</b></li>
+            <li>|ψ|² = <b>Aufenthaltswahrscheinlichkeit</b> des Elektrons</li>
+            <li>Orbitaltypen: <b>s, p, d, f</b> (verschiedene Formen)</li>
           </ul>
         </div>
         <div>
-          <br>
-          <div class="info-box" style="border-left-color:rgba(74,240,200,0.4)">
+          <div class="info-box">
+            <div class="box-title">Orbitaltypen</div>
+            <div class="orbital-hint">
+              <span class="orb-tag">s – Kugel</span>
+              <span class="orb-tag">p – Hantel</span>
+              <span class="orb-tag">d – Kleeblatt</span>
+              <span class="orb-tag">f – komplex</span>
+            </div>
+          </div>
+          <div class="info-box">
             <div class="box-title">Kernaussage</div>
-            <p>Wir können nur sagen, <b>wo ein Elektron wahrscheinlich ist</b> – nicht wo es gerade ist.</p>
+            <p>Wir können nur sagen, <b>wo ein Elektron wahrscheinlich ist</b>
+               – niemals wo es gerade <i>ist</i>. Das Atom ist eine
+               <span class="accent">Wahrscheinlichkeitswolke</span>.</p>
           </div>
         </div>
       </div>
       <div class="year-badge">1926</div>
     </div>
 
-    <!-- 9: FRAGEN -->
-    <div class="slide" data-atom="quantum" data-era="Ende">
+    <!-- ┌──────────────────────────────────────────
+         │ SLIDE 9 · FRAGEN & FEEDBACK
+         └────────────────────────────────────────── -->
+    <div class="slide"
+         data-atom="question" data-era="Abschluss" data-sidebar="show">
+
       <div class="big-q">?</div>
       <div class="slide-tag">Abschluss</div>
       <h2>Fragen &amp; <span class="hl">Feedback</span></h2>
-      <p>Vielen Dank für eure Aufmerksamkeit! Habt ihr noch fragen?</p>
+      <p>Vielen Dank für eure Aufmerksamkeit! Ich freue mich über Fragen,
+         Kommentare und Anmerkungen.</p>
+      <br>
+      <div class="info-box">
+        <div class="box-title">Die Entwicklung im Überblick</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">~450 v.</div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-text"><b>Demokrit</b> – Atomos, philosophische Idee</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1803</div>
+            <div class="timeline-dot" style="background:var(--gold);box-shadow:0 0 8px var(--gold)"></div>
+            <div class="timeline-text"><b>Dalton</b> – Massive Kugel, Stöchiometrie</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1897</div>
+            <div class="timeline-dot" style="background:var(--accent2);box-shadow:0 0 8px var(--accent2)"></div>
+            <div class="timeline-text"><b>Thomson</b> – Elektron, Rosinenkuchen</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1911</div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-text"><b>Rutherford</b> – Kern &amp; Hülle, leerer Raum</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1913</div>
+            <div class="timeline-dot" style="background:var(--accent2);box-shadow:0 0 8px var(--accent2)"></div>
+            <div class="timeline-text"><b>Bohr</b> – Quantisierte Schalen, Spektren</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1932</div>
+            <div class="timeline-dot" style="background:var(--gold);box-shadow:0 0 8px var(--gold)"></div>
+            <div class="timeline-text"><b>Chadwick</b> – Neutronen, Nucleonen</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1926+</div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-text"><b>Quantenmechanik</b> – Orbitale, Unschärfe</div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- 10: SOURCES -->
-    <div class="slide" data-atom="none" data-era="Quellen">
+    <!-- ┌──────────────────────────────────────────
+         │ SLIDE 10 · QUELLEN
+         └────────────────────────────────────────── -->
+    <div class="slide"
+         data-atom="none" data-era="" data-sidebar="hide">
+
       <div class="slide-tag">Quellenverzeichnis</div>
       <h2>Quellen</h2>
       <ul class="source-list">
-        <li data-n="1">Podcast: Chemie erklärt, Folge 1 Atommodelle</li>
-        <li data-n="2">Web: https://de.wikipedia.org/wiki/Atom</li>
-        <li data-n="3">Web: https://de.wikipedia.org/wiki/Bohrsches_Atommodell</li>
+        <li data-n="1">Encyclopaedia Britannica: <i>Democritus</i>. britannica.com, abgerufen 2024.</li>
+        <li data-n="2">Dalton, J. (1808). <i>A New System of Chemical Philosophy</i>. Manchester: Bickerstaff.</li>
+        <li data-n="3">Thomson, J.J. (1897). Cathode Rays. <i>Philosophical Magazine</i>, 44, 293–316.</li>
+        <li data-n="4">Rutherford, E. (1911). The Scattering of α and β Particles by Matter. <i>Phil. Mag.</i>, 21, 669–688.</li>
+        <li data-n="5">Chadwick, J. (1932). Possible Existence of a Neutron. <i>Nature</i>, 129, 312.</li>
+        <li data-n="6">Bohr, N. (1913). On the Constitution of Atoms and Molecules. <i>Phil. Mag.</i>, 26, 1–25.</li>
+        <li data-n="7">Schrödinger, E. (1926). Quantisierung als Eigenwertproblem. <i>Annalen der Physik</i>, 79, 361–376.</li>
+        <li data-n="8">Heisenberg, W. (1927). Über den anschaulichen Inhalt der quantenmechanischen Kinematik. <i>Z. Phys.</i>, 43.</li>
+        <li data-n="9">Tipler, P. &amp; Llewellyn, R. (2012). <i>Moderne Physik</i>. Oldenbourg Verlag.</li>
+        <li data-n="10">Mortimer, C.E. &amp; Müller, U. (2019). <i>Chemie</i> (13. Aufl.). Thieme Verlag.</li>
       </ul>
-      <br>
-      <h4>Benutzung von Künstlicher intelligenz:</h4>
-      <p>
-
-      ChatGPT 4o/5o über offizielle Website [ChatGPT](https://www.chatgpt.com)<br>
-      Prompt 1: "Sag mir Webseiten (Links) bei denen ich Informationen finde um diesen Wissenspunkt zu verfeinern, verbessern und zukorrigieren.
-      - Die Ganze Natur besteht aus kleinen unteilbaren Teilchen.
-      - Atom kommt aus dem Grichischen Atomos - "unteilbar".<br>
-      - John Dalton war Naturforscher und Lehrer.<br>
-      ### Neuerungen nach Dalton:<br>
-      - Atome können ein **unterschiedliches Gewicht** besitzen.<br>
-      - **Chemische Elemente** kommen ins Spiel: Die Vorstellung Atome können verschiedene Eigenschaften besitzen.<br>
-      - Atome bei denen die Eigenschaften gleich sind bezeichnen wir als "Element"<br>
-      </p>
-      <h2>(c) Frederick Martel 2026</h2>
-      <p>This Software is distributed under the MIT License.<a href="https://fredima.de/license">License</a></p>
     </div>
 
-  </div><!-- /slides-container -->
+  </div><!-- /#slides-container -->
 
   <div id="controls">
     <button class="nav-btn" id="prevBtn" disabled>← Zurück</button>
+    <div id="slide-dots"></div>
     <span id="slide-counter">1 / 11</span>
     <button class="nav-btn" id="nextBtn">Weiter →</button>
   </div>
-</div>
+</div><!-- /#slides-area -->
 
-<div id="key-hint">← → Pfeiltasten · Leertaste</div>
-<script src="/js/gfs_slides.js"></script>
+<div id="key-hint">← → Leertaste · F = Vollbild</div>
+
+<script>
+'use strict';
+// ════════════════════════════════════════════════════
+// SLIDE CONTROLLER
+// ════════════════════════════════════════════════════
+const slides      = document.querySelectorAll('.slide');
+const prevBtn     = document.getElementById('prevBtn');
+const nextBtn     = document.getElementById('nextBtn');
+const counter     = document.getElementById('slide-counter');
+const progressBar = document.getElementById('progress-bar');
+const dotsCont    = document.getElementById('slide-dots');
+const sidebar     = document.getElementById('atom-sidebar');
+let current = 0;
+
+// Dots
+slides.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'slide-dot' + (i === 0 ? ' active' : '');
+  d.addEventListener('click', () => goTo(i));
+  dotsCont.appendChild(d);
+});
+
+function goTo(n) {
+  if (n < 0 || n >= slides.length || n === current) return;
+  
+  // Alle Slides zurücksetzen
+  slides.forEach((s, i) => {
+    s.classList.remove('active', 'out-left');
+  });
+  
+  // Aktuelle Slide aktivieren
+  slides[n].classList.add('active');
+  
+  current = n;
+  updateUI();
+}
+
+function updateUI() {
+  counter.textContent = `${current + 1} / ${slides.length}`;
+  progressBar.style.width = `${(current / (slides.length-1))*100}%`;
+  prevBtn.disabled = current === 0;
+  nextBtn.disabled = current === slides.length - 1;
+  document.querySelectorAll('.slide-dot').forEach((d,i) =>
+    d.classList.toggle('active', i === current));
+
+  const pref = slides[current].dataset.sidebar;
+  if (pref === 'hide') sidebar.classList.add('hidden');
+  else if (pref === 'show') sidebar.classList.remove('hidden');
+
+  const type = slides[current].dataset.atom || 'none';
+  document.getElementById('atom-era').textContent = slides[current].dataset.era || '';
+  transitionAtom(type);
+}
+
+prevBtn.addEventListener('click', () => goTo(current - 1));
+nextBtn.addEventListener('click', () => goTo(current + 1));
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT') return;
+  if (e.key === 'ArrowRight' || e.key === ' ') goTo(current + 1);
+  if (e.key === 'ArrowLeft') goTo(current - 1);
+  if (e.key === 'f' || e.key === 'F') document.documentElement.requestFullscreen?.();
+});
+
+
+// ════════════════════════════════════════════════════
+// ATOM CANVAS RENDERER
+// ════════════════════════════════════════════════════
+const canvas = document.getElementById('atomCanvas');
+const ctx = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+const CX = W/2, CY = H/2;
+
+let animT = 0, fromType = 'none', toType = 'none';
+let transitioning = false, transitionT = 0;
+const TDUR = 55;
+
+const atomMeta = {
+  none:       { label: '' },
+  demokrit:   { label: 'Demokrits Atomos · ~450 v.Chr.' },
+  dalton:     { label: 'Dalton-Modell · 1803' },
+  thomson:    { label: 'Thomson-Modell · 1897' },
+  rutherford: { label: 'Rutherford-Modell · 1911' },
+  neutron:    { label: 'Kern-Modell mit Nucleonen · 1932' },
+  bohr:       { label: 'Bohrsches Schalenmodell · 1913' },
+  quantum:    { label: 'Quantenmechanisches Modell · heute' },
+};
+
+function transitionAtom(nType) {
+  if (nType === toType) return;
+  fromType = toType; toType = nType;
+  transitioning = true; transitionT = 0;
+  document.getElementById('atom-label').textContent = atomMeta[nType]?.label || '';
+}
+
+// ── Helpers ─────────────────────────────────────────
+function grd(x,y,r0,r1,stops) {
+  const g = ctx.createRadialGradient(x,y,r0,x,y,r1);
+  stops.forEach(([t,c]) => g.addColorStop(t,c));
+  return g;
+}
+function circle(x,y,r) { ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); }
+
+// ── NONE ────────────────────────────────────────────
+function drawNone(a) {
+  ctx.globalAlpha = a*0.18;
+  ctx.strokeStyle='#3ee8bb'; ctx.lineWidth=1;
+  ctx.setLineDash([2,9]);
+  circle(CX,CY,80); ctx.stroke();
+  ctx.setLineDash([]); ctx.globalAlpha=1;
+}
+
+// ── DEMOKRIT ────────────────────────────────────────
+function drawDemokrit(a,t) {
+  const bob = Math.sin(t*0.016)*5;
+  ctx.globalAlpha=a;
+  // Aura
+  ctx.fillStyle=grd(CX,CY+bob,30,140,[
+    [0,'rgba(100,140,255,0.12)'],[1,'rgba(100,140,255,0)']]);
+  circle(CX,CY+bob,140); ctx.fill();
+  // Ball
+  ctx.fillStyle=grd(CX-22,CY-22+bob,8,74+Math.sin(t*0.018)*5,[
+    [0,'rgba(225,235,255,0.95)'],[0.35,'rgba(130,165,255,0.75)'],
+    [0.75,'rgba(55,85,200,0.5)'],[1,'rgba(18,38,120,0.08)']]);
+  circle(CX,CY+bob,74+Math.sin(t*0.018)*5); ctx.fill();
+  ctx.strokeStyle=`rgba(190,215,255,${0.45*a})`; ctx.lineWidth=1.5; ctx.stroke();
+  // Specular
+  ctx.fillStyle=grd(CX-22,CY-26+bob,0,28,[
+    [0,'rgba(255,255,255,0.6)'],[1,'rgba(255,255,255,0)']]);
+  circle(CX,CY+bob,74); ctx.fill();
+  // Greek text
+  ctx.globalAlpha=a*0.8; ctx.fillStyle='#e8eaf6';
+  ctx.font="italic bold 17px 'Playfair Display',serif";
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText('ἄτομος',CX,CY+bob);
+  // orbiting particles
+  for(let i=0;i<8;i++){
+    const ang=(i/8)*Math.PI*2+t*0.007;
+    const pr=100+Math.sin(t*0.02+i*0.8)*10;
+    ctx.globalAlpha=a*0.28;
+    ctx.fillStyle='#8090ff';
+    circle(CX+Math.cos(ang)*pr, CY+Math.sin(ang)*pr*0.5, 2); ctx.fill();
+  }
+  ctx.globalAlpha=1; ctx.textBaseline='alphabetic';
+}
+
+// ── DALTON ──────────────────────────────────────────
+function drawDalton(a,t) {
+  const bob=Math.sin(t*0.014)*3;
+  ctx.globalAlpha=a;
+  // outer glow
+  ctx.fillStyle=grd(CX,CY+bob,40,130,[
+    [0,'rgba(240,192,48,0.07)'],[1,'rgba(240,192,48,0)']]);
+  circle(CX,CY+bob,130); ctx.fill();
+  // ball
+  const r=72;
+  ctx.fillStyle=grd(CX-22,CY-22+bob,6,r,[
+    [0,'rgba(255,245,180,1)'],[0.28,'rgba(248,198,52,1)'],
+    [0.65,'rgba(175,118,10,1)'],[1,'rgba(75,45,0,1)']]);
+  circle(CX,CY+bob,r); ctx.fill();
+  // specular
+  ctx.fillStyle=grd(CX-20,CY-22+bob,0,30,[
+    [0,'rgba(255,255,255,0.65)'],[0.5,'rgba(255,255,255,0.1)'],[1,'rgba(255,255,255,0)']]);
+  circle(CX,CY+bob,r); ctx.fill();
+  // rim
+  ctx.strokeStyle=`rgba(255,205,80,${0.28*a})`; ctx.lineWidth=2;
+  circle(CX,CY+bob,r); ctx.stroke();
+  ctx.globalAlpha=1;
+}
+
+// ── THOMSON ─────────────────────────────────────────
+function drawThomson(a,t) {
+  const pulse=Math.sin(t*0.019)*6;
+  ctx.globalAlpha=a;
+  // blob
+  ctx.fillStyle=grd(CX,CY,8,90+pulse,[
+    [0,'rgba(255,150,55,0.88)'],[0.5,'rgba(215,85,25,0.52)'],
+    [0.82,'rgba(155,35,8,0.16)'],[1,'rgba(155,35,8,0)']]);
+  circle(CX,CY,90+pulse); ctx.fill();
+
+  // electrons (drifting rosinen)
+  const ePos=[
+    {r:26,a0:0.5,spd:0.006},{r:50,a0:2.1,spd:-0.004},
+    {r:36,a0:3.8,spd:0.005},{r:63,a0:1.2,spd:-0.007},
+    {r:20,a0:4.5,spd:0.009},{r:68,a0:5.8,spd:-0.003},
+    {r:42,a0:0.0,spd:0.008},
+  ];
+  ePos.forEach(ep=>{
+    const ang=ep.a0+t*ep.spd;
+    const ex=CX+Math.cos(ang)*ep.r, ey=CY+Math.sin(ang)*ep.r;
+    // glow
+    ctx.globalAlpha=a*0.32;
+    ctx.fillStyle=grd(ex,ey,0,14,[[0,'rgba(62,232,187,0.8)'],[1,'rgba(62,232,187,0)']]);
+    circle(ex,ey,14); ctx.fill();
+    // core
+    ctx.globalAlpha=a;
+    ctx.fillStyle='#3ee8bb'; circle(ex,ey,5.5); ctx.fill();
+    // minus
+    ctx.globalAlpha=a*0.7; ctx.fillStyle='#070b13';
+    ctx.fillRect(ex-3,ey-0.8,6,1.6);
+  });
+  ctx.globalAlpha=1;
+}
+
+// ── RUTHERFORD ──────────────────────────────────────
+function drawRutherford(a,t) {
+  ctx.globalAlpha=a;
+  const orbits=[
+    {rx:110,ry:33,tilt:0.0, spd:0.022},
+    {rx:96, ry:36,tilt:1.15,spd:-0.018},
+    {rx:118,ry:28,tilt:-0.7,spd:0.016},
+  ];
+  orbits.forEach(orb=>{
+    ctx.save(); ctx.translate(CX,CY); ctx.rotate(orb.tilt);
+    // orbit line
+    ctx.strokeStyle=`rgba(62,232,187,${0.18*a})`; ctx.lineWidth=1;
+    ctx.setLineDash([3,6]);
+    ctx.beginPath(); ctx.ellipse(0,0,orb.rx,orb.ry,0,0,Math.PI*2); ctx.stroke();
+    ctx.setLineDash([]);
+    // trail + electron
+    const ea=t*orb.spd;
+    for(let tr=1;tr<=14;tr++){
+      const ta=ea-tr*0.09;
+      ctx.globalAlpha=a*(0.055*(15-tr)/15);
+      ctx.fillStyle='#3ee8bb';
+      circle(Math.cos(ta)*orb.rx,Math.sin(ta)*orb.ry,3.5); ctx.fill();
+    }
+    const ex=Math.cos(ea)*orb.rx, ey=Math.sin(ea)*orb.ry;
+    ctx.globalAlpha=a*0.38;
+    ctx.fillStyle=grd(ex,ey,0,16,[[0,'rgba(62,232,187,0.9)'],[1,'rgba(62,232,187,0)']]);
+    circle(ex,ey,16); ctx.fill();
+    ctx.globalAlpha=a; ctx.fillStyle='#3ee8bb'; circle(ex,ey,5); ctx.fill();
+    ctx.restore();
+  });
+  // nucleus glow
+  ctx.globalAlpha=a*0.28;
+  ctx.fillStyle=grd(CX,CY,0,28,[[0,'rgba(240,192,48,0.9)'],[1,'rgba(240,192,48,0)']]);
+  circle(CX,CY,28); ctx.fill();
+  // nucleus
+  ctx.globalAlpha=a;
+  ctx.fillStyle=grd(CX-4,CY-4,1,13,[[0,'#fff'],[0.3,'#f0c030'],[1,'#c08010']]);
+  circle(CX,CY,13); ctx.fill();
+  ctx.globalAlpha=1;
+}
+
+// ── NEUTRON ─────────────────────────────────────────
+function drawNeutron(a,t) {
+  ctx.globalAlpha=a;
+  const orbits=[
+    {rx:106,ry:31,tilt:0.2, spd:0.022},
+    {rx:90, ry:35,tilt:1.3, spd:-0.018},
+    {rx:112,ry:27,tilt:-0.5,spd:0.014},
+  ];
+  orbits.forEach(orb=>{
+    ctx.save(); ctx.translate(CX,CY); ctx.rotate(orb.tilt);
+    ctx.strokeStyle=`rgba(62,232,187,${0.17*a})`; ctx.lineWidth=1;
+    ctx.setLineDash([3,6]);
+    ctx.beginPath(); ctx.ellipse(0,0,orb.rx,orb.ry,0,0,Math.PI*2); ctx.stroke();
+    ctx.setLineDash([]);
+    const ea=t*orb.spd;
+    for(let tr=1;tr<=12;tr++){
+      const ta=ea-tr*0.09;
+      ctx.globalAlpha=a*(0.055*(13-tr)/13); ctx.fillStyle='#3ee8bb';
+      circle(Math.cos(ta)*orb.rx,Math.sin(ta)*orb.ry,3.2); ctx.fill();
+    }
+    const ex=Math.cos(ea)*orb.rx, ey=Math.sin(ea)*orb.ry;
+    ctx.globalAlpha=a; ctx.fillStyle='#3ee8bb'; circle(ex,ey,5); ctx.fill();
+    ctx.restore();
+  });
+  // nucleus cluster glow
+  ctx.globalAlpha=a*0.22;
+  ctx.fillStyle=grd(CX,CY,0,30,[[0,'rgba(240,90,90,0.9)'],[1,'rgba(240,90,90,0)']]);
+  circle(CX,CY,30); ctx.fill();
+  // nucleons
+  ctx.globalAlpha=a;
+  const nuc=[
+    {x:-6,y:-6,p:true},{x:7,y:-4,p:false},{x:0,y:7,p:true},
+    {x:-7,y:5,p:false},{x:8,y:6,p:true},{x:0,y:-3,p:false},{x:-3,y:1,p:true},
+  ];
+  nuc.forEach(n=>{
+    const col=n.p?'#f05a5a':'#7878f0';
+    ctx.fillStyle=grd(CX+n.x-2,CY+n.y-2,0,6,[
+      [0,'#ffffff'],[0.3,col],[1,col.replace(')',',0.6)').replace('rgb','rgba')]]);
+    circle(CX+n.x,CY+n.y,5.5); ctx.fill();
+  });
+  ctx.globalAlpha=1;
+}
+
+// ── BOHR ────────────────────────────────────────────
+function drawBohr(a,t) {
+  ctx.globalAlpha=a;
+  const shells=[
+    {r:48, eN:2,col:'#3ee8bb',spd:0.045},
+    {r:82, eN:4,col:'#d45af0',spd:-0.028},
+    {r:118,eN:3,col:'#3ee8bb',spd:0.018},
+  ];
+  shells.forEach(sh=>{
+    // shell glow ring
+    ctx.globalAlpha=a*0.055; ctx.strokeStyle=sh.col; ctx.lineWidth=7;
+    circle(CX,CY,sh.r); ctx.stroke();
+    ctx.globalAlpha=a*0.2; ctx.lineWidth=1;
+    circle(CX,CY,sh.r); ctx.stroke();
+    // electrons
+    for(let e=0;e<sh.eN;e++){
+      const ang=t*sh.spd+(e/sh.eN)*Math.PI*2;
+      const ex=CX+Math.cos(ang)*sh.r, ey=CY+Math.sin(ang)*sh.r;
+      // trail
+      for(let tr=1;tr<=20;tr++){
+        const ta=ang-tr*0.09;
+        ctx.globalAlpha=a*(0.038*(21-tr)/21); ctx.fillStyle=sh.col;
+        circle(CX+Math.cos(ta)*sh.r,CY+Math.sin(ta)*sh.r,3.5); ctx.fill();
+      }
+      // glow
+      ctx.globalAlpha=a*0.45;
+      ctx.fillStyle=grd(ex,ey,0,17,[[0,sh.col],[1,sh.col+'00']]);
+      circle(ex,ey,17); ctx.fill();
+      // core
+      ctx.globalAlpha=a; ctx.fillStyle=sh.col; circle(ex,ey,5.5); ctx.fill();
+    }
+  });
+  // nucleus glow
+  ctx.globalAlpha=a*0.32;
+  ctx.fillStyle=grd(CX,CY,0,34,[[0,'rgba(240,192,48,0.9)'],[1,'rgba(240,192,48,0)']]);
+  circle(CX,CY,34); ctx.fill();
+  ctx.globalAlpha=a;
+  ctx.fillStyle=grd(CX-4,CY-4,1,15,[[0,'#fff'],[0.3,'#f0c030'],[1,'#b07010']]);
+  circle(CX,CY,15); ctx.fill();
+  ctx.globalAlpha=1;
+}
+
+// ── QUANTUM ─────────────────────────────────────────
+// s-Orbital (Kugel) + p-Orbital (rotierende Hanteln) +
+// d-Orbital (4 Lappen) + Partikelwolke + pulsierender Kern
+function drawQuantum(a,t) {
+  const pA = t*0.011;          // p-Orbital Rotationswinkel
+  const dA = t*0.0065;         // d-Orbital Rotationswinkel
+
+  // ── s-Orbital (sphärische Wolke) ─────────────────
+  ctx.globalAlpha=a;
+  ctx.fillStyle=grd(CX,CY,0,58,[
+    [0,`rgba(62,232,187,${0.52*a})`],
+    [0.4,`rgba(62,232,187,${0.16*a})`],
+    [0.75,`rgba(62,232,187,${0.04*a})`],
+    [1,'rgba(62,232,187,0)']]);
+  circle(CX,CY,58); ctx.fill();
+
+  // ── p-Orbital (zwei rotierende Lappen) ───────────
+  [0,Math.PI].forEach((off,li)=>{
+    const ang=pA+off;
+    const pLen=92+Math.sin(t*0.024)*8;
+    const lcx=CX+Math.cos(ang)*(pLen*0.48);
+    const lcy=CY+Math.sin(ang)*(pLen*0.48);
+    const lr=44+Math.sin(t*0.02+li*1.1)*5;
+    ctx.save(); ctx.translate(lcx,lcy);
+    ctx.fillStyle=grd(0,0,0,lr,[
+      [0,`rgba(212,90,240,${0.48*a})`],
+      [0.45,`rgba(212,90,240,${0.18*a})`],
+      [1,'rgba(212,90,240,0)']]);
+    circle(0,0,lr); ctx.fill(); ctx.restore();
+  });
+
+  // ── d-Orbital (vier Lappen, versetzt) ────────────
+  for(let lobe=0;lobe<4;lobe++){
+    const la=dA+(lobe/4)*Math.PI*2;
+    const dr=136;
+    const lcx=CX+Math.cos(la)*(dr*0.52);
+    const lcy=CY+Math.sin(la)*(dr*0.38);
+    const lr=33+Math.sin(t*0.016+lobe*0.8)*6;
+    ctx.save(); ctx.translate(lcx,lcy);
+    ctx.fillStyle=grd(0,0,0,lr,[
+      [0,`rgba(240,192,48,${0.38*a})`],
+      [0.5,`rgba(240,192,48,${0.1*a})`],
+      [1,'rgba(240,192,48,0)']]);
+    circle(0,0,lr); ctx.fill(); ctx.restore();
+  }
+
+  // ── Partikelwolke (feste Seeds → kein Flackern) ──
+  ctx.globalAlpha=a*0.6;
+  const N=90;
+  for(let i=0;i<N;i++){
+    const seed=i*137.508;
+    const theta=seed%(Math.PI*2);
+    if(i < N*0.30){
+      // s
+      const r=5+(((i*7919)%48));
+      ctx.fillStyle=`rgba(62,232,187,${0.55*a})`;
+      circle(CX+Math.cos(theta+t*0.003)*r, CY+Math.sin(theta+t*0.003)*r*0.95, 1.3);
+      ctx.fill();
+    } else if(i < N*0.62){
+      // p
+      const side=i%2===0?1:-1;
+      const pr=50+((i*3571)%45);
+      const pa=pA+((i*1.618)%1.4)-0.7;
+      ctx.fillStyle=`rgba(212,90,240,${0.5*a})`;
+      circle(CX+Math.cos(pa)*pr*side, CY+Math.sin(pa)*pr*side*0.85, 1.3);
+      ctx.fill();
+    } else {
+      // d
+      const lb=i%4;
+      const la2=dA+(lb/4)*Math.PI*2+((i*0.05)%0.9)-0.45;
+      const lr2=88+((i*2311)%55);
+      ctx.fillStyle=`rgba(240,192,48,${0.48*a})`;
+      circle(CX+Math.cos(la2)*lr2*0.88, CY+Math.sin(la2)*lr2*0.52, 1.3);
+      ctx.fill();
+    }
+  }
+
+  // ── pulsierender Kern ─────────────────────────────
+  const pulse=1+Math.sin(t*0.038)*0.18;
+  ctx.globalAlpha=a*0.38*(0.65+Math.sin(t*0.038)*0.35);
+  ctx.fillStyle=grd(CX,CY,0,24*pulse,[
+    [0,'rgba(255,255,255,0.9)'],[0.3,'rgba(240,192,48,0.7)'],[1,'rgba(240,192,48,0)']]);
+  circle(CX,CY,24*pulse); ctx.fill();
+
+  ctx.globalAlpha=a;
+  ctx.fillStyle=grd(CX-2,CY-2,0,7,[[0,'#fff'],[0.5,'#f0c030'],[1,'#b07010']]);
+  circle(CX,CY,7); ctx.fill();
+  ctx.globalAlpha=1;
+}
+
+// ── QUESTION MARK (3D) ──────────────────────────────
+function drawQuestion(a, t) {
+  ctx.globalAlpha = a;
+  
+  // Rotation & Float
+  const rotY = Math.sin(t * 0.008) * 0.5;
+  const floatY = Math.sin(t * 0.012) * 10;
+  
+  // 3D Projection Helper
+  function project3D(x, y, z) {
+    // Rotate Y
+    let x1 = x * Math.cos(rotY) - z * Math.sin(rotY);
+    let z1 = x * Math.sin(rotY) + z * Math.cos(rotY);
+    // Perspective
+    const perspective = 600;
+    const scale = perspective / (perspective + z1);
+    return {
+      x: CX + x1 * scale,
+      y: CY + y * scale + floatY,
+      scale: scale,
+      z: z1
+    };
+  }
+  
+  // Fragezeichen als Pfad-Punkte
+  const questionPath = [];
+  
+  // Oberer Bogen (von links nach rechts, dann runter)
+  for (let i = 0; i <= 20; i++) {
+    const angle = Math.PI + (Math.PI * i / 20);
+    const radius = 35;
+    questionPath.push({
+      x: Math.cos(angle) * radius,
+      y: -40 + Math.sin(angle) * radius
+    });
+  }
+  
+  // Vertikale Linie nach unten
+  for (let i = 1; i <= 8; i++) {
+    questionPath.push({
+      x: 0,
+      y: -5 + (i * 3)
+    });
+  }
+  
+  // Zeichne mehrere Depth-Layer
+  const layers = [];
+  
+  for (let depth = -15; depth <= 15; depth += 3) {
+    const brightness = 0.4 + ((depth + 15) / 30) * 0.6;
+    
+    // Fragezeichen-Kurve
+    const projectedPath = questionPath.map(p => project3D(p.x, p.y, depth));
+    layers.push({
+      z: depth,
+      draw: () => {
+        ctx.globalAlpha = a * brightness;
+        ctx.strokeStyle = `rgba(62, 232, 187, ${brightness})`;
+        ctx.lineWidth = 14;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        
+        ctx.beginPath();
+        projectedPath.forEach((p, i) => {
+          if (i === 0) ctx.moveTo(p.x, p.y);
+          else ctx.lineTo(p.x, p.y);
+        });
+        ctx.stroke();
+      }
+    });
+    
+    // Punkt unten
+    const dotPos = project3D(0, 35, depth);
+    layers.push({
+      z: depth,
+      draw: () => {
+        ctx.globalAlpha = a * brightness;
+        ctx.fillStyle = `rgba(62, 232, 187, ${brightness})`;
+        circle(dotPos.x, dotPos.y, 10 * dotPos.scale);
+        ctx.fill();
+      }
+    });
+  }
+  
+  // Sortiere und zeichne
+  layers.sort((a, b) => a.z - b.z);
+  layers.forEach(layer => layer.draw());
+  
+  // Glow-Effekt
+  ctx.globalAlpha = a * 0.25;
+  ctx.fillStyle = grd(CX, CY + floatY, 0, 140, [
+    [0, 'rgba(62, 232, 187, 0.5)'],
+    [1, 'rgba(62, 232, 187, 0)']
+  ]);
+  circle(CX, CY + floatY, 140);
+  ctx.fill();
+  
+  // Orbit-Partikel
+  for (let i = 0; i < 16; i++) {
+    const angle = (i / 16) * Math.PI * 2 + t * 0.008;
+    const radius = 110 + Math.sin(t * 0.015 + i * 0.5) * 20;
+    const px = CX + Math.cos(angle) * radius;
+    const py = CY + Math.sin(angle) * radius * 0.6 + floatY;
+    
+    ctx.globalAlpha = a * (0.25 + Math.sin(t * 0.02 + i) * 0.15);
+    ctx.fillStyle = '#3ee8bb';
+    circle(px, py, 2.5);
+    ctx.fill();
+    
+    // Mini-Glow
+    ctx.globalAlpha = a * 0.15;
+    ctx.fillStyle = 'rgba(62, 232, 187, 0.3)';
+    circle(px, py, 8);
+    ctx.fill();
+  }
+  
+  ctx.globalAlpha = 1;
+}
+
+
+
+// ── Draw-Map ─────────────────────────────────────────
+// Um ein neues Modell hinzuzufügen:
+// 1. Funktion schreiben: function drawMeinModell(alpha, t) { ... }
+// 2. Hier eintragen:     meinModell: drawMeinModell,
+// 3. In atomMeta:        meinModell: { label: 'Beschreibung' },
+const drawFns = {
+  none:       drawNone,
+  demokrit:   drawDemokrit,
+  dalton:     drawDalton,
+  thomson:    drawThomson,
+  rutherford: drawRutherford,
+  neutron:    drawNeutron,
+  bohr:       drawBohr,
+  quantum:    drawQuantum,
+  question:   drawQuestion,
+};
+
+// ── Render Loop ───────────────────────────────────────
+function render() {
+  ctx.clearRect(0,0,W,H); animT++;
+  // Gitter
+  ctx.strokeStyle='rgba(62,232,187,0.032)'; ctx.lineWidth=1;
+  for(let x=0;x<W;x+=28){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+  for(let y=0;y<H;y+=28){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+
+  if(transitioning){
+    transitionT++;
+    const p=Math.min(transitionT/TDUR,1);
+    const e=p<0.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2; // ease-in-out-cubic
+    if(drawFns[fromType]) drawFns[fromType](1-e, animT);
+    if(drawFns[toType])   drawFns[toType](e, animT);
+    if(p>=1) transitioning=false;
+  } else {
+    if(drawFns[toType]) drawFns[toType](1.0, animT);
+  }
+  requestAnimationFrame(render);
+}
+
+// ── Init ─────────────────────────────────────────────
+sidebar.classList.add('hidden');
+transitionAtom('none');
+document.getElementById('atom-label').textContent='';
+updateUI();
+render();
+</script>
 </body>
 </html>
