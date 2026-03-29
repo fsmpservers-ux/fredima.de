@@ -2,9 +2,12 @@
 
 ### Slide: Demokrit
 Demokrit, philosoph um 400 v. Chr. - "Die gesamte Natur besteht aus kleinen unsichtbaren und unteilbaren teilchen."
+- Demokrit konnte diese Theorie noch nicht beweisen!
+- **400 v. Chr.**
 
 ### Slide: Dalton
 Atome können verschiedene eigenschafften haben und sind unterschiedlich schwer. Gleiche Atome gehören zu einem Element.
+
 
 ### **NEW** Thompson Slide: 
 Wissenschafftler haben Elektrische Entladungen in Luftleeren röhren untersucht. **->** Entdeckung der Khatodenstrahlung!
@@ -23,5 +26,5 @@ Diese *"Protonen"* sollen ein großteil der Masse des Atoms einnehmen, da sie vi
 **->** Rosinenkuchenmodell
 
 ### Rutherford erkennt:
-Rutherford schiesst Positive teilchen auf Goldfolie, diese fliegen grade hindurch.
+Rutherford schießt Positive teilchen auf Goldfolie, diese fliegen grade hindurch.
 Ein paar Teilchen wurden stark abgelenkt.
