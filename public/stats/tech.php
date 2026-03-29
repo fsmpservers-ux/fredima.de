@@ -19,7 +19,7 @@ $ghCache = __DIR__ . '/../../data/github_cache.json';
 $ghStatus = file_exists($ghCache) ? date('Y-m-d H:i:s', filemtime($ghCache)) : 'Nicht vorhanden';
 $ghAge = file_exists($ghCache) ? round((time() - filemtime($ghCache)) / 60) : 0;
 
-// Browser/OS Aggregation für Tabelle
+// Browser/OS Aggregation fuer Tabelle
 $browserAgg = []; $osAgg = [];
 foreach(($s['browsers']??[]) as $day=>$data){
     foreach($data as $b=>$c){
@@ -37,7 +37,7 @@ arsort($browserAgg); arsort($osAgg);
 $totalUnique = array_sum($browserAgg);
 
 // Top Tage
-arsort($s['daily']??[]);
+$dailyData = $s["daily"] ?? []; arsort($dailyData); $s["daily"] = $dailyData;
 $topDays = array_slice($s['daily']??[], 0, 5, true);
 ?>
 <!DOCTYPE html>
@@ -264,14 +264,14 @@ $topDays = array_slice($s['daily']??[], 0, 5, true);
                 <div class="metric"><span class="label">Total Visits:</span><span class="value"><?php echo number_format($s['total']??0); ?></span></div>
                 <div class="metric"><span class="label">Unique Visitors:</span><span class="value"><?php echo number_format($totalUnique); ?></span></div>
                 <div class="metric"><span class="label">Tage erfasst:</span><span class="value"><?php echo count($s['daily']??[]); ?></span></div>
-                <div class="metric"><span class="label">Ø pro Tag:</span><span class="value"><?php echo count($s['daily']??[])>0?number_format(($s['total']??0)/count($s['daily']??[])):0; ?></span></div>
+                <div class="metric"><span class="label">Durchschnitt pro Tag:</span><span class="value"><?php echo count($s['daily']??[])>0?number_format(($s['total']??0)/count($s['daily']??[])):0; ?></span></div>
             </div>
 
             <div class="tech-card floating delay-1">
                 <h3>🐙 GitHub Cache<?php echo $ghAge<60?'<span class="badge blink">LIVE</span>':'<span class="badge">'.$ghAge.'m alt</span>'; ?></h3>
                 <div class="metric"><span class="label">Letztes Update:</span><span class="value"><?php echo $ghStatus; ?></span></div>
                 <div class="metric"><span class="label">Cache-Datei:</span><span class="value"><?php echo file_exists($ghCache)?'Vorhanden':'Nicht vorhanden'; ?></span></div>
-                <div class="metric"><span class="label">Größe:</span><span class="value"><?php echo file_exists($ghCache)?number_format(filesize($ghCache)/1024,2).' KB':'-'; ?></span></div>
+                <div class="metric"><span class="label">Groesse:</span><span class="value"><?php echo file_exists($ghCache)?number_format(filesize($ghCache)/1024,2).' KB':'-'; ?></span></div>
             </div>
         </div>
 

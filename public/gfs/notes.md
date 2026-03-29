@@ -11,7 +11,7 @@ Wissenschafftler haben Elektrische Entladungen in Luftleeren röhren untersucht.
 Khatodenstrahlung bildete die Grundlage für Röhrenfernseher, bei dem die Strahlung auf den Schirm trifft und dort sichtbar wird.
 
 Thompson stellt fest, das man diese Strahlung mit Hilfe von Elektrischen und Magnetischen Feldern beeinflussen kann. 
-Die Strahlung wird immer in Richtung Positiver Platten abgelenkt **->** Muss negativ geladen sein!
+Die Strahlung wird immer in Richtung Positiver Platten abgelenkt **->** Muss negativ geladen sein!*
 Egal welches Element man eingesetzt hatt, die Strahlung ist immer gleich geblieben. **->** Es muss ein Teilchen geben, das unahängig vom Element immer gleich ist.
 **Er nennt diese Teilchen *"Elektronen".***
 **->** Entdeckung der Subatomaren Teilchen, also Teilchen die im Atom vorkommen.
