@@ -80,13 +80,11 @@ body::after {
   transition:
     width .7s cubic-bezier(.77,0,.175,1),
     min-width .7s cubic-bezier(.77,0,.175,1),
-    opacity .45s ease,
     border-right-width .7s ease;
 }
 #atom-sidebar.hidden {
   width: 0 !important;
   min-width: 0 !important;
-  opacity: 0;
   border-right-width: 0;
 }
 #atom-sidebar::before {
@@ -110,7 +108,10 @@ body::after {
   font-size:9px; letter-spacing:2px; color:var(--accent); text-transform:uppercase;
   opacity:.8; line-height:1.6; transition:all .6s ease;
 }
-canvas#atomCanvas { display:block; }
+canvas#atomCanvas {
+  display:block;
+  background: var(--panel);
+}
 
 /* ══════════════════════════════════════════════
    REVEAL CONTAINER  (nimmt den Rest)
@@ -120,6 +121,7 @@ canvas#atomCanvas { display:block; }
   min-width: 0;
   position: relative;
   overflow: hidden;
+  background: var(--bg);
 }
 
 /* ══════════════════════════════════════════════
