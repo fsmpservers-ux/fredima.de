@@ -14,12 +14,6 @@ cd /var/www/fredima.de/
 git pull
 
 echo ""
-echo "📁 Setting up data directory..."
-mkdir -p /var/www/fredima.de/data
-chmod 755 /var/www/fredima.de/data
-chown -R http:http /var/www/fredima.de/data
-
-echo ""
 echo "🔧 Checking PHP-FPM..."
 if systemctl is-active --quiet php-fpm; then
     echo "✅ PHP-FPM is running"
@@ -28,11 +22,8 @@ else
     systemctl start php-fpm
 fi
 
-# Ensure PHP-FPM is enabled on boot
-systemctl enable php-fpm
-
 echo ""
-echo "🔒 Fixing permissions..."
+echo "permissions..."
 chown -R http:http /var/www/fredima.de/public
 chown -R http:http /var/www/fredima.de/nginx
 chown -R http:http /var/www/fredima.de/data
@@ -53,20 +44,7 @@ fi
 
 echo ""
 echo "🔄 Restarting services..."
-systemctl restart php-fpm
 systemctl restart nginx
 
-echo ""
-echo "========================================"
-echo "✅ Update complete!"
-echo "========================================"
-echo ""
-echo "Test your site:"
-echo "  • https://fredima.de"
-echo "  • https://fredima.de/stats"
-echo "  • https://fredima.de/api/stats.php"
-echo ""
-echo "Services status:"
 systemctl is-active --quiet nginx && echo "  ✅ Nginx: Running" || echo "  ❌ Nginx: Failed"
-systemctl is-active --quiet php-fpm && echo "  ✅ PHP-FPM: Running" || echo "  ❌ PHP-FPM: Failed"
 echo ""
