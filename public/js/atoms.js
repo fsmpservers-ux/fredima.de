@@ -89,6 +89,7 @@ const atomMeta = {
   neutron:    { label: 'Kern-Modell + Nucleonen · 1932' },
   bohr:       { label: 'Bohrsches Schalenmodell · 1913' },
   quantum:    { label: 'Quantenmechanisches Modell · heute' },
+  debroglie:  { label: 'De-Broglie-Wellenmodell · 1924' },
 };
 
 function transitionAtom(nType) {
@@ -295,11 +296,93 @@ function drawQuantum(a,t) {
   circ(CX,CY,7); ctx.fill();
   ctx.globalAlpha = 1;
 }
+function drawDeBroglie(a, t) {
+  // Drei Bahnen mit stehenden Materiewellen drauf
+  const orbits = [
+    { r: 52,  n: 2, col: '#3ee8bb', spd:  .018 },
+    { r: 88,  n: 4, col: '#d45af0', spd: -.012 },
+    { r: 124, n: 6, col: '#f0c030', spd:  .008 },
+  ];
 
+  ctx.globalAlpha = a;
+
+  orbits.forEach(orb => {
+    const steps = 320;
+    const phaseShift = t * orb.spd;
+
+    // Gestrichelte Führungsbahn
+    ctx.save();
+    ctx.strokeStyle = `rgba(255,255,255,${.07 * a})`;
+    ctx.lineWidth = 1;
+    ctx.setLineDash([3, 7]);
+    circ(CX, CY, orb.r);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+
+    // Stehende Welle auf der Kreisbahn
+    const waveAmp = 9 + Math.sin(t * .025) * 2.5;
+    ctx.beginPath();
+    for (let i = 0; i <= steps; i++) {
+      const ang  = (i / steps) * Math.PI * 2;
+      const wave = Math.sin(ang * orb.n + phaseShift * orb.n * 3);
+      const r    = orb.r + wave * waveAmp;
+      const x    = CX + Math.cos(ang) * r;
+      const y    = CY + Math.sin(ang) * r;
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+
+    // Glühender Gradient entlang der Welle
+    ctx.strokeStyle = orb.col;
+    ctx.lineWidth   = 1.8;
+    ctx.globalAlpha = a * .85;
+    ctx.stroke();
+
+    // Leuchtschimmer
+    ctx.lineWidth   = 5;
+    ctx.globalAlpha = a * .12;
+    ctx.stroke();
+  });
+
+  // Wanderndes "Wellenpäckchen" – sichtbares Elektron auf mittlerer Bahn
+  const packetAng = t * .022;
+  const packetR   = 88 + Math.sin(packetAng * 4 + t * -.012 * 4 * 3) * 9;
+  const px = CX + Math.cos(packetAng) * packetR;
+  const py = CY + Math.sin(packetAng) * packetR;
+
+  ctx.globalAlpha = a * .35;
+  ctx.fillStyle   = grd(px, py, 0, 22, [[0, 'rgba(212,90,240,.9)'], [1, 'rgba(212,90,240,0)']]);
+  circ(px, py, 22); ctx.fill();
+
+  ctx.globalAlpha = a;
+  ctx.fillStyle   = '#d45af0';
+  circ(px, py, 5.5); ctx.fill();
+
+  // Kern
+  ctx.globalAlpha = a * .28;
+  ctx.fillStyle   = grd(CX, CY, 0, 26, [[0, 'rgba(240,192,48,.9)'], [1, 'rgba(240,192,48,0)']]);
+  circ(CX, CY, 26); ctx.fill();
+
+  ctx.globalAlpha = a;
+  ctx.fillStyle   = grd(CX - 3, CY - 3, 1, 12, [[0, '#fff'], [.3, '#f0c030'], [1, '#b07010']]);
+  circ(CX, CY, 12); ctx.fill();
+
+  // λ-Label
+  ctx.globalAlpha = a * .55;
+  ctx.fillStyle   = '#3ee8bb';
+  ctx.font        = "italic bold 14px 'Playfair Display', serif";
+  ctx.textAlign   = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('λ = h/p', CX, CY + 152);
+  ctx.textBaseline = 'alphabetic';
+
+  ctx.globalAlpha = 1;
+}
 const drawFns = {
   none: drawNone, demokrit: drawDemokrit, dalton: drawDalton,
   thomson: drawThomson, rutherford: drawRutherford, neutron: drawNeutron,
-  bohr: drawBohr, quantum: drawQuantum,
+  bohr: drawBohr, quantum: drawQuantum, debroglie: drawDeBroglie,
 };
 
 function render() {
