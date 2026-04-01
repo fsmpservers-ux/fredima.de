@@ -1,0 +1,5 @@
+.htpasswd
+*.log
+*.tmp
+*.bak
+*.swp

@@ -42,6 +42,12 @@ else
     exit 1
 fi
 
+# Erstelle .htpasswd Datei wenn sie nicht existiert
+if [ ! -f /var/www/fredima.de/.htpasswd ]; then
+    echo "🔐 Creating .htpasswd file..."
+    touch /var/www/fredima.de/.htpasswd
+fi
+
 echo ""
 echo "🔄 Restarting services..."
 systemctl restart nginx
