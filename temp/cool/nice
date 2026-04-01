@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fredi's digital services and portfolio from Stuttgart, Germany. Minecraft enthusiast and developer offering hosting and custom projects.">
+    <meta name="keywords" content="developer Stuttgart, web development, Minecraft, hosting panel, fredima, portfolio, digital services">
+    <meta name="author" content="Fredi">
+    <meta property="og:title" content="fredima.de - Digital Services & Portfolio">
+    <meta property="og:description" content="Fredi's portfolio: Digital services, projects, and hosting from Stuttgart. Let's build something massive!">
+    <meta property="og:image" content="https://fredima.de/og-image.jpg">
+    <meta property="og:url" content="https://fredima.de">
+    <meta property="og:site_name" content="fredima.de">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://fredima.de/">
+    <meta name="robots" content="index, follow">
+    <title>fredima.de - Digital Services & Portfolio</title>
+    <link rel="stylesheet" href="/style/styles.css">
+</head>
+<body>
+<img src="/track.php" alt="" width="1" height="1" style="position:absolute;visibility:hidden;" />
+<div class="background"></div>
+<div class="grid"></div>
+<div class="container">
+<h1 class="logo"></h1>
+<p class="subtitle"></p>
+
+<h3>Test Website.</h3>
+<p>Hello World!</p>    
+
+</div>
+</body>
+</html>
