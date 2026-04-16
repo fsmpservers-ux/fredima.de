@@ -1,321 +1,643 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Atommodelle – GFS Präsentation</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Atommodelle – GFS Präsentation</title>
 
-<!-- ① Reveal.js Core (CDN) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css">
-<!-- Kein Theme – wir stylen komplett selbst -->
-<!-- Custom Stylesheet -->
-<link rel="stylesheet" href="/style/gfs_style.css">
+        <!-- ① Reveal.js Core (CDN) -->
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css"
+        />
+        <!-- Kein Theme – wir stylen komplett selbst -->
+        <!-- Custom Stylesheet -->
+        <link rel="stylesheet" href="/style/gfs_style.css" />
 
-<!-- ② Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
-
-
-</head>
-<body>
-
-<div id="wrapper">
-
-  <!-- ① ATOM-SIDEBAR -->
-  <div id="atom-sidebar" class="hidden">
-    <div id="atom-era"></div>
-    <canvas id="atomCanvas" width="340" height="340"></canvas>
-    <div id="atom-label"></div>
-  </div>
-
-  <!-- ② REVEAL.JS CONTAINER -->
-  <div id="reveal-container">
-    <div class="reveal">
-      <div class="slides">
-
-        <!-- ══ 0 · INTRO ══════════════════════════════ -->
-        <section data-atom="none" data-sidebar="hide" data-era="">
-          <div class="slide-gfs">GFS · Physik / Chemie</div>
-          <h1>Die Geschichte<br>des <span class="hl">Atoms</span></h1>
-          <div class="subtitle-line">Von Demokrit bis zur Quantenmechanik</div>
-          <p>Eine Reise durch 2.500 Jahre Wissenschaftsgeschichte –
-             vom philosophischen Konzept der unteilbaren Materie
-             zum modernen quantenmechanischen Atommodell.</p>
-          <div class="gfs-meta">
-            <div class="meta-item">Fach<span>Physik / Chemie</span></div>
-            <div class="meta-item">Format<span>GFS</span></div>
-            <div class="meta-item">Thema<span>Atommodelle</span></div>
-          </div>
-          <div class="intro-decoration">A</div>
-          <aside class="notes">
-            Herzlich willkommen! Kurz vorstellen, Thema und Ablauf ankündigen.
-          </aside>
-        </section>
-
-        <!-- ══ 1 · INHALTSANGABE ══════════════════════ -->
-        <section data-atom="none" data-sidebar="hide" data-era="Überblick">
-          <div class="slide-tag">Inhaltsangabe</div>
-          <h2>Was erwartet euch?</h2>
-          <div class="toc-grid">
-            <div class="toc-item"><span class="toc-num">01</span>Demokrit – Die erste Atomidee</div>
-            <div class="toc-item"><span class="toc-num">02</span>Dalton – Das Kugelatom</div>
-            <div class="toc-item"><span class="toc-num">03</span>Thomson – Entdeckung des Elektrons</div>
-            <div class="toc-item"><span class="toc-num">04</span>Rutherford – Kern &amp; Hülle</div>
-            <div class="toc-item"><span class="toc-num">05</span>Neutronen &amp; Nucleonen</div>
-            <div class="toc-item"><span class="toc-num">06</span>Bohr – Das Schalenmodell</div>
-            <div class="toc-item"><span class="toc-num">07</span>Quantenmechanisches Modell</div>
-            <div class="toc-item"><span class="toc-num">08</span>Fragen &amp; Quellen</div>
-          </div>
-          <aside class="notes">
-            Wichtig: Bedeutung des Atommodells: Es dient dazu die Realität zu beschreiben, bilded sie aber nicht
-            genau ab. Es ist ein Werkzeug, um Phänomene zu erklären und vorherzusagen. Alle Modelle haben Fehler und Grenzen.
-          </aside>
-        </section>
-
-        <!-- ══ 2 · DEMOKRIT ══════════════════════════ -->
-        <section data-atom="demokrit" data-sidebar="show" data-era="~450 v. Chr.">
-          <div class="slide-tag">Antike · ~450 v. Chr.</div>
-          <h2>Demokrit &amp; das <span class="hl">Atomos</span></h2>
-          <div class="two-col">
-            <div>
-              <p>Der griechische Philosoph <b>Demokrit (~460–370 v. Chr.)</b>
-                 behauptete, dass alle Materie aus wizigen, unteilbaren Teilchen besteht. Gennant: <span class="accent">„Atomos"</span>
-                 – altgriechisch für <b>„unteilbar"</b>.</p>
-              <ul class="bullet-list">
-                <li>Atome können auch nicht erzeugt oder zerstört werden.</li>
-                <li>Zwischen den Atomen befindet sich nur <b>Leerer Raum.</b></li>
-                <li>Er konnte diese Theorie noch nicht beweisen.</li>
-              </ul>
+        <!-- ② Google Fonts -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;700;900&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <div id="wrapper">
+            <!-- ① ATOM-SIDEBAR -->
+            <div id="atom-sidebar" class="hidden">
+                <div id="atom-era"></div>
+                <canvas id="atomCanvas" width="340" height="340"></canvas>
+                <div id="atom-label"></div>
             </div>
-          </div>
-          <div class="year-badge">450 v.Chr.</div>
-          <aside class="notes">
-            Demokrits Atomtheorie war rein philosophisch und basierte auf logischem Denken, nicht auf Experimenten.
-            Trotzdem legte sie den Grundstein für die spätere wissenschaftliche Erforschung der Materie.
-          </aside>
-        </section>
 
-        <!-- ══ 3 · DALTON ════════════════════════════ -->
-        <section data-atom="dalton" data-sidebar="show" data-era="1803">
-          <div class="slide-tag">1803</div>
-          <h2>John <span class="hl3">Dalton</span> – Das Kugelatom</h2>
-          <div class="two-col">
-            <div>
-              <p>Der britische Lehrer <b>John Dalton (1766–1844)</b> entwickelte 1803
-                 das erste <b>wissenschaftlich fundierte</b> Atommodell – basierend auf
-                 chemischen Experimenten und Massengesetzen.</p>
-              <ul class="bullet-list">
-                <li>Theorie im Kern gleich wie die von Demokrit.</li>
-                <li>Atome haben verschiedene Eigenschafften, und sind unterschiedlich schwer.</li>
-                <li>Gleiche Atome gehören zu einem Element.</li>
-                <li>Chemische Reaktionen = <b>Neuanordnung von Atomen</b></li>
-              </ul>
-              <div class="info-box red">
-                <div class="box-title">Ungenauhigkeit:</div>
-                <p>Atome haben laut ihm keinen inneren Aufbau</p>
-              </div>
-            </div>
-          </div>
-          <div class="year-badge">1803</div>
-          <aside class="notes">
-            - Im prinzip das gleiche wie demokrit.
-          </aside>
-        </section>
+            <!-- ② REVEAL.JS CONTAINER -->
+            <div id="reveal-container">
+                <div class="reveal">
+                    <div class="slides">
+                        <!-- ══ 0 · INTRO ══════════════════════════════ -->
+                        <section
+                            data-atom="none"
+                            data-sidebar="hide"
+                            data-era=""
+                        >
+                            <div class="slide-gfs">GFS · Physik / Chemie</div>
+                            <h1>
+                                Die Geschichte<br />des
+                                <span class="hl">Atoms</span>
+                            </h1>
+                            <div class="subtitle-line">
+                                Von Demokrit bis zur Quantenmechanik
+                            </div>
+                            <p>
+                                Eine Reise durch 2.500 Jahre
+                                Wissenschaftsgeschichte – vom philosophischen
+                                Konzept der unteilbaren Materie zum modernen
+                                quantenmechanischen Atommodell.
+                            </p>
+                            <div class="gfs-meta">
+                                <div class="meta-item">
+                                    Fach<span>Physik / Chemie</span>
+                                </div>
+                                <div class="meta-item">
+                                    Format<span>GFS</span>
+                                </div>
+                                <div class="meta-item">
+                                    Thema<span>Atommodelle</span>
+                                </div>
+                            </div>
+                            <div class="intro-decoration">A</div>
+                            <aside class="notes">
+                                Herzlich willkommen! Kurz vorstellen, Thema und
+                                Ablauf ankündigen.
+                            </aside>
+                        </section>
 
-        <!-- ══ 4 · THOMSON ═══════════════════════════ -->
-        <section data-atom="thomson" data-sidebar="show" data-era="1897">
-          <div class="slide-tag">1897</div>
-          <h2>Entdeckung des <span class="hl2">Elektrons</span></h2>
-          <div class="two-col">
-            <div>
-              <p><b>Joseph John Thomson (1856–1940)</b> experimentierte 1897 mit Kathodenstrahlen und entdeckte,
-                    dass sich diese Strahlung durch <b>positive</b> Magnetische und Elektrische Felder ablenken ließ.
-                    Daraus schloss er, dass die Strahlung aus negativen Teilchen besteht.
-                    Außerdem, blieb dieser Effekt auch bei verschiedenen Gasen und Metallkathoden gleich – es muss also ein universelles Teilchen sein: das <span class="accent">Elektron</span>.</p>
-              <ul class="bullet-list">
-                <li>Elektronen sind <b>negativ geladen</b></li>
-                <li>Elektronen ~1836× leichter als Wasserstoffatom</li>
-                <li>Das Atom ist <b>nicht unteilbar</b> → Dalton und Demokrit widerlegt!</li>
-                <li>Atome sind nach außen <b>elektrisch neutral</b></li>
-                <li>→ Es muss eine <b>positive Ladung</b> im Atom geben</li>
-              </ul>
-            </div>
-            <div>
-              <div class="info-box pink">
-                <div class="box-title">Rosinenkuchenmodell</div>
-                <p>Das Atom als <b>positiv geladene Masse</b>, in der Elektronen
-                   wie <b>Rosinen im Kuchen</b> eingebettet sind.</p>
-              </div>
-            </div>
-          </div>
-          <div class="year-badge">1897</div>
-          <aside class="notes">
-            - Elektronen sind negativ geladen, viel leichter als Atome, und universell.
-            - Das Atom ist nicht unteilbar, es muss eine positive Ladung geben.
-            - Rosinenkuchenmodell: Positiv geladene Masse mit Elektronen drin.
-          </aside>
-        </section>
+                        <!-- ══ 1 · INHALTSANGABE ══════════════════════ -->
+                        <section
+                            data-atom="none"
+                            data-sidebar="hide"
+                            data-era="Überblick"
+                        >
+                            <div class="slide-tag">Inhaltsangabe</div>
+                            <h2>Was erwartet euch?</h2>
+                            <div class="toc-grid">
+                                <div class="toc-item">
+                                    <span class="toc-num">01</span>Demokrit –
+                                    Die erste Atomidee
+                                </div>
+                                <div class="toc-item">
+                                    <span class="toc-num">02</span>Dalton – Das
+                                    Kugelatom
+                                </div>
+                                <div class="toc-item">
+                                    <span class="toc-num">03</span>Thomson –
+                                    Entdeckung des Elektrons
+                                </div>
+                                <div class="toc-item">
+                                    <span class="toc-num">04</span>Rutherford –
+                                    Kern &amp; Hülle
+                                </div>
+                                <div class="toc-item">
+                                    <span class="toc-num">05</span>Neutronen
+                                    &amp; Nucleonen
+                                </div>
+                                <div class="toc-item">
+                                    <span class="toc-num">06</span>Bohr – Das
+                                    Schalenmodell
+                                </div>
+                                <div class="toc-item">
+                                    <span class="toc-num">07</span
+                                    >Quantenmechanisches Modell
+                                </div>
+                                <div class="toc-item">
+                                    <span class="toc-num">08</span>Fragen &amp;
+                                    Quellen
+                                </div>
+                            </div>
+                            <aside class="notes">
+                                Wichtig: Bedeutung des Atommodells: Es dient
+                                dazu die Realität zu beschreiben, bilded sie
+                                aber nicht genau ab. Es ist ein Werkzeug, um
+                                Phänomene zu erklären und vorherzusagen. Alle
+                                Modelle haben Fehler und Grenzen.
+                            </aside>
+                        </section>
 
-        <!-- ══ 5 · RUTHERFORD ════════════════════════ -->
-        <section data-atom="rutherford" data-sidebar="show" data-era="1911">
-          <div class="slide-tag">1911</div>
-          <h2><span class="hl">Rutherford</span> – Kern &amp; Hülle</h2>
-          <div class="two-col">
-            <div>
-              <p><b>Ernest Rutherford (1871–1937)</b> beschoss 1911 im berühmten
-                 <span class="accent">Goldfolienexperiment</span> eine dünne Goldfolie
-                mit Positiv geladenen. Dabei flogen wie vermutet die meisten Teilchen grad hindurch
-                Allerdings wurden manche Teilchen stark in verschiedene Richtungen abgelenkt. Dieses Phänomen
-                konnte mit Thompsons Rosinenkuchen-Modell nicht geklärt werden.</p>
-              <ul class="bullet-list">
-                <li>
-                  Er erkannte, das aufgrund der unwahrscheinlichkeit der Kollision der Atomkern wie kleiner als vermutet
-                  in relation zum gesamtatom ist.
-                </li>
-                <li>
-                  Die <span class="accent">Elektronen umkreisen den Kern</span> mit Abstand wie Planeten um die Sonne.
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="year-badge">1911</div>
-          <aside class="notes">
-            - Goldfolienexperiment: Positiv geladene Teilchen auf dünne Goldfolie geschossen.
-            - Ergebnis: Die meisten fliegen durch, aber einige werden stark abgelenkt.
-            - Schlussfolgerung: Atomkern ist sehr klein und positiv geladen, Elektronen kreisen darum herum.
-          </aside>
-        </section>
+                        <!-- ══ 2 · DEMOKRIT ══════════════════════════ -->
+                        <section
+                            data-atom="demokrit"
+                            data-sidebar="show"
+                            data-era="~450 v. Chr."
+                        >
+                            <div class="slide-tag">Antike · ~450 v. Chr.</div>
+                            <h2>
+                                Demokrit &amp; das
+                                <span class="hl">Atomos</span>
+                            </h2>
+                            <div class="two-col">
+                                <div>
+                                    <p>
+                                        Der griechische Philosoph
+                                        <b>Demokrit (~460–370 v. Chr.)</b>
+                                        behauptete, dass alle Materie aus
+                                        wizigen, unteilbaren Teilchen besteht.
+                                        Gennant:
+                                        <span class="accent">„Atomos"</span> –
+                                        altgriechisch für <b>„unteilbar"</b>.
+                                    </p>
+                                    <ul class="bullet-list">
+                                        <li>
+                                            Atome können auch nicht erzeugt oder
+                                            zerstört werden.
+                                        </li>
+                                        <li>
+                                            Zwischen den Atomen befindet sich
+                                            nur <b>Leerer Raum.</b>
+                                        </li>
+                                        <li>
+                                            Er konnte diese Theorie noch nicht
+                                            beweisen.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="year-badge">450 v.Chr.</div>
+                            <aside class="notes">
+                                Demokrits Atomtheorie war rein philosophisch und
+                                basierte auf logischem Denken, nicht auf
+                                Experimenten. Trotzdem legte sie den Grundstein
+                                für die spätere wissenschaftliche Erforschung
+                                der Materie.
+                            </aside>
+                        </section>
 
-        <!-- ══ 6 · NEUTRONEN ═════════════════════════ -->
-        <section data-atom="neutron" data-sidebar="show" data-era="1920 – 1932">
-          <div class="slide-tag">1920 – 1932</div>
-          <h2>Protonen, Neutronen &amp; <span class="hl3">Nucleonen</span></h2>
-          <div class="two-col">
-            <div>
-              <p><b>Rutherford</b> entdeckte 1920 das <span class="accent">Proton</span>.
-                 <b>James Chadwick (1891–1974)</b> entdeckte 1932 das
-                 <span class="gold">Neutron</span>. Damit war der Kern vollständig beschrieben.</p>
-              <ul class="bullet-list">
-                <li><b style="color:var(--danger);">Protonen</b> – positiv geladen, im Kern</li>
-                <li><b style="color:var(--blue);">Neutronen</b> – elektrisch neutral, im Kern</li>
-                <li><b style="color:var(--accent);">Elektronen</b> – negativ geladen, in der Hülle</li>
-              </ul>
-            </div>
-            <div>
-              <div class="info-box gold">
-                <div class="box-title">Nucleonen – Definition</div>
-                <p>Der Begriff <b>„Nucleonen"</b> fasst alle Kernteilchen zusammen –
-                   Protonen und Neutronen – weil beide im
-                   <b>Atomkern</b> (Nucleus) vorkommen.</p>
-              </div>
-            </div>
-          </div>
-          <div class="year-badge">1932</div>
-          <aside class="notes">
-            - Rutherford entdeckte das Proton, Chadwick das Neutron.
-            - Nucleonen: Sammelbegriff für Protonen und Neutronen im Kern.
-          </aside>
-        </section>
+                        <!-- ══ 3 · DALTON ════════════════════════════ -->
+                        <section
+                            data-atom="dalton"
+                            data-sidebar="show"
+                            data-era="1803"
+                        >
+                            <div class="slide-tag">1803</div>
+                            <h2>
+                                John <span class="hl3">Dalton</span> – Das
+                                Kugelatom
+                            </h2>
+                            <div class="two-col">
+                                <div>
+                                    <p>
+                                        Der britische Lehrer
+                                        <b>John Dalton (1766–1844)</b>
+                                        entwickelte 1803 das erste
+                                        <b>wissenschaftlich fundierte</b>
+                                        Atommodell – basierend auf chemischen
+                                        Experimenten und Massengesetzen.
+                                    </p>
+                                    <ul class="bullet-list">
+                                        <li>
+                                            Theorie im Kern gleich wie die von
+                                            Demokrit.
+                                        </li>
+                                        <li>
+                                            Atome haben verschiedene
+                                            Eigenschafften, und sind
+                                            unterschiedlich schwer.
+                                        </li>
+                                        <li>
+                                            Gleiche Atome gehören zu einem
+                                            Element.
+                                        </li>
+                                        <li>
+                                            Chemische Reaktionen =
+                                            <b>Neuanordnung von Atomen</b>
+                                        </li>
+                                    </ul>
+                                    <div class="info-box red">
+                                        <div class="box-title">
+                                            Ungenauhigkeit:
+                                        </div>
+                                        <p>
+                                            Atome haben laut ihm keinen inneren
+                                            Aufbau
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="year-badge">1803</div>
+                            <aside class="notes">
+                                - Im prinzip das gleiche wie demokrit.
+                            </aside>
+                        </section>
 
-        <section data-sidebar="hide">
-          <h2>Das Model hat einen <span class="hl2">Fehler</span> / <span class="hl3">Ungenauigkeit</span>!</h2>
-          <div class="info-box" style="border-left-color:var(--danger);">
-            <div class="box-title" style="color:var(--danger);">Problem des Modells:</div>
-            <p>
-              Beschleunigte Elektronen strahlen Energie ab und sollten
-              <b>spiralförmig in den Kern stürzen</b>. Stabilität unerklärbar.
-            </p>
-          </div>
-          <aside class="notes">
-            - Problem: Elektronen kreisen um den Kern, aber beschleunigte Ladungen (Elektronen) sollten Energie abstrahlen und in den Kern stürzen.
-            - Das Modell konnte die Stabilität des Atoms nicht erklären.
-          </aside>
-        </section>
+                        <!-- ══ 4 · THOMSON ═══════════════════════════ -->
+                        <section
+                            data-atom="thomson"
+                            data-sidebar="show"
+                            data-era="1897"
+                        >
+                            <div class="slide-tag">1897</div>
+                            <h2>
+                                Entdeckung des
+                                <span class="hl2">Elektrons</span>
+                            </h2>
+                            <div class="two-col">
+                                <div>
+                                    <p>
+                                        <b>Joseph John Thomson (1856–1940)</b>
+                                        experimentierte 1897 mit
+                                        Kathodenstrahlen und entdeckte, dass
+                                        sich diese Strahlung durch
+                                        <b>positive</b> Magnetische und
+                                        Elektrische Felder ablenken ließ. Daraus
+                                        schloss er, dass die Strahlung aus
+                                        negativen Teilchen besteht. Außerdem,
+                                        blieb dieser Effekt auch bei
+                                        verschiedenen Gasen und Metallkathoden
+                                        gleich – es muss also ein universelles
+                                        Teilchen sein: das
+                                        <span class="accent">Elektron</span>.
+                                    </p>
+                                    <ul class="bullet-list">
+                                        <li>
+                                            Elektronen sind
+                                            <b>negativ geladen</b>
+                                        </li>
+                                        <li>
+                                            Elektronen ~1836× leichter als
+                                            Wasserstoffatom
+                                        </li>
+                                        <li>
+                                            Das Atom ist
+                                            <b>nicht unteilbar</b> → Dalton und
+                                            Demokrit widerlegt!
+                                        </li>
+                                        <li>
+                                            Atome sind nach außen
+                                            <b>elektrisch neutral</b>
+                                        </li>
+                                        <li>
+                                            → Es muss eine
+                                            <b>positive Ladung</b> im Atom geben
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <div class="info-box pink">
+                                        <div class="box-title">
+                                            Rosinenkuchenmodell
+                                        </div>
+                                        <p>
+                                            Das Atom als
+                                            <b>positiv geladene Masse</b>, in
+                                            der Elektronen wie
+                                            <b>Rosinen im Kuchen</b> eingebettet
+                                            sind.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="year-badge">1897</div>
+                            <aside class="notes">
+                                - Elektronen sind negativ geladen, viel leichter
+                                als Atome, und universell. - Das Atom ist nicht
+                                unteilbar, es muss eine positive Ladung geben. -
+                                Rosinenkuchenmodell: Positiv geladene Masse mit
+                                Elektronen drin.
+                            </aside>
+                        </section>
 
-        
-        <!-- ══ Quantenphysik Einstieg mit Bohr ══════════════════════════════ -->
-        <section>
-          <section data-atom="bohr" data-sidebar="hide" data-era="1913" data-transition="slide">
-            <div class="slide-tag">Voraussetzung · 1900</div>
-            <h2>Die Idee der <span class="hl2">Quantenphysik</span></h2>
-            <p>Basis für Bohrs Modell: <b>Max Planck (1900)</b> entdeckte, dass
-              Energie nicht kontinuierlich fließt, sondern nur in
-              diskreten Paketen abgegeben wird.</p>
-            <div class="two-col">
-              <div class="info-box pink">
-                <div class="box-title">Klassische Physik</div>
-                <p>Energie kann jeden beliebigen Wert annehmen.</p>
-              </div>
-              <div class="info-box pink">
-                <div class="box-title">Quantenphysik</div>
-                  <p>
-                    Energie wird nur in <b>festen Portionen</b> abgegeben –
-                    <span class="pink">Quanten</span>
-                  </p>
-                </div>
-              </div>
-            <div class="year-badge">1900</div>
-            <aside class="notes">
-              - Plancks Quantentheorie: Energie wird in diskreten Paketen (Quanten) abgegeben, nicht kontinuierlich.
-              - Diese Idee war revolutionär und legte den Grundstein für die Quantenphysik.
-              - Diskontinuierlich nicht kontinuierlich.
-            </aside>
-          </section>
+                        <!-- ══ 5 · RUTHERFORD ════════════════════════ -->
+                        <section
+                            data-atom="rutherford"
+                            data-sidebar="show"
+                            data-era="1911"
+                        >
+                            <div class="slide-tag">1911</div>
+                            <h2>
+                                <span class="hl">Rutherford</span> – Kern &amp;
+                                Hülle
+                            </h2>
+                            <div class="two-col">
+                                <div>
+                                    <p>
+                                        <b>Ernest Rutherford (1871–1937)</b>
+                                        beschoss 1911 im berühmten
+                                        <span class="accent"
+                                            >Goldfolienexperiment</span
+                                        >
+                                        eine dünne Goldfolie mit Positiv
+                                        geladenen. Dabei flogen wie vermutet die
+                                        meisten Teilchen grad hindurch
+                                        Allerdings wurden manche Teilchen stark
+                                        in verschiedene Richtungen abgelenkt.
+                                        Dieses Phänomen konnte mit Thompsons
+                                        Rosinenkuchen-Modell nicht geklärt
+                                        werden.
+                                    </p>
+                                    <ul class="bullet-list">
+                                        <li>
+                                            Er erkannte, das aufgrund der
+                                            unwahrscheinlichkeit der Kollision
+                                            der Atomkern wie kleiner als
+                                            vermutet in relation zum gesamtatom
+                                            ist.
+                                        </li>
+                                        <li>
+                                            Die
+                                            <span class="accent"
+                                                >Elektronen umkreisen den
+                                                Kern</span
+                                            >
+                                            mit Abstand wie Planeten um die
+                                            Sonne.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="year-badge">1911</div>
+                            <aside class="notes">
+                                - Goldfolienexperiment: Positiv geladene
+                                Teilchen auf dünne Goldfolie geschossen. -
+                                Ergebnis: Die meisten fliegen durch, aber einige
+                                werden stark abgelenkt. - Schlussfolgerung:
+                                Atomkern ist sehr klein und positiv geladen,
+                                Elektronen kreisen darum herum.
+                            </aside>
+                        </section>
 
-          <section data-atom="bohr" data-sidebar="show" data-era="1913" data-transition="slide">
-            <div class="slide-tag">1913</div>
-            <h2>Niels <span class="hl2">Bohr</span> – Das Schalenmodell</h2>
-            <p>Bohr übertrug Plancks Quantenidee auf den Atomaufbau
-              und löste damit Rutherfords Stabilitätsproblem.</p>
-            <ul class="bullet-list">
-              <li>Elektronen kreisen nur auf <b>festen, Bahnen</b> – den Schalen</li>
-              <li>Jede Schale hat ein <b>klar definiertes Energieniveau</b></li>
-              <li><b>Energieaufnahme</b> → Elektron springt auf äußere Schale</li>
-              <li><b>Energieabgabe</b> → Elektron fällt zurück</li>
-            </ul>
-            <div class="info-box pink" style="margin-top: 10px;">
-              <div class="box-title">Kernprinzip</div>
-              <p>Zwischen den Schalen gibt es <b>keinen erlaubten Aufenthaltsort</b>
-                – der Sprung passiert <span class="pink">instantan</span>,
-                ohne Zwischenstufe. Daher: <b>Quantensprung</b>.</p>
-            </div>
-            <div class="year-badge">1913</div>
-            <aside class="notes">
-              - Bohr übertrug Plancks Quantentheorie auf den Atomaufbau und löste damit Rutherfords Stabilitätsproblem.
-              - Elektronen kreisen nur auf festen Bahnen (Schalen) mit definierten Energieniveaus.
-              - Energieaufnahme → Elektron springt auf äußere Schale, Energieabgabe → Elektron fällt zurück.
-            </aside>
-          </section>
-          <section data-atom="bohr" data-sidebar="show" data-era="1913" data-transition="slide">
-            <div class="slide-tag">1913</div>
-            <h2>Bohrs Modell – <span style="color: red;">Probleme</span></h2>
-            <ul class="bullet-list">
-              <li>Außgelassen: Elektronen stoßen sich gegenseitig ab.</li>
-            </ul>
-          </section>
-        </section>
+                        <!-- ══ 6 · NEUTRONEN ═════════════════════════ -->
+                        <section
+                            data-atom="neutron"
+                            data-sidebar="show"
+                            data-era="1920 – 1932"
+                        >
+                            <div class="slide-tag">1920 – 1932</div>
+                            <h2>
+                                Protonen, Neutronen &amp;
+                                <span class="hl3">Nucleonen</span>
+                            </h2>
+                            <div class="two-col">
+                                <div>
+                                    <p>
+                                        <b>Rutherford</b> entdeckte 1920 das
+                                        <span class="accent">Proton</span>.
+                                        <b>James Chadwick (1891–1974)</b>
+                                        entdeckte 1932 das
+                                        <span class="gold">Neutron</span>. Damit
+                                        war der Kern vollständig beschrieben.
+                                    </p>
+                                    <ul class="bullet-list">
+                                        <li>
+                                            <b style="color: var(--danger)"
+                                                >Protonen</b
+                                            >
+                                            – positiv geladen, im Kern
+                                        </li>
+                                        <li>
+                                            <b style="color: var(--blue)"
+                                                >Neutronen</b
+                                            >
+                                            – elektrisch neutral, im Kern
+                                        </li>
+                                        <li>
+                                            <b style="color: var(--accent)"
+                                                >Elektronen</b
+                                            >
+                                            – negativ geladen, in der Hülle
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <div class="info-box gold">
+                                        <div class="box-title">
+                                            Nucleonen – Definition
+                                        </div>
+                                        <p>
+                                            Der Begriff <b>„Nucleonen"</b> fasst
+                                            alle Kernteilchen zusammen –
+                                            Protonen und Neutronen – weil beide
+                                            im <b>Atomkern</b> (Nucleus)
+                                            vorkommen.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="year-badge">1932</div>
+                            <aside class="notes">
+                                - Rutherford entdeckte das Proton, Chadwick das
+                                Neutron. - Nucleonen: Sammelbegriff für Protonen
+                                und Neutronen im Kern.
+                            </aside>
+                        </section>
 
+                        <section data-sidebar="hide">
+                            <h2>
+                                Das Model hat einen
+                                <span class="hl2">Fehler</span> /
+                                <span class="hl3">Ungenauigkeit</span>!
+                            </h2>
+                            <div
+                                class="info-box"
+                                style="border-left-color: var(--danger)"
+                            >
+                                <div
+                                    class="box-title"
+                                    style="color: var(--danger)"
+                                >
+                                    Problem des Modells:
+                                </div>
+                                <p>
+                                    Beschleunigte Elektronen strahlen Energie ab
+                                    und sollten
+                                    <b>spiralförmig in den Kern stürzen</b>.
+                                    Stabilität unerklärbar.
+                                </p>
+                            </div>
+                            <aside class="notes">
+                                - Problem: Elektronen kreisen um den Kern, aber
+                                beschleunigte Ladungen (Elektronen) sollten
+                                Energie abstrahlen und in den Kern stürzen. -
+                                Das Modell konnte die Stabilität des Atoms nicht
+                                erklären.
+                            </aside>
+                        </section>
 
-        <section>
-          <section data-sidebar="hide" data-transition="slide">
-            <h2><span style="color: aquamarine;">Le Broglie</span> und das Materiewellen-Model</h2>
-            <p>Louis de Broglie (1892–1987) erweiterte 1924 die Quantenidee auf Materie
-              und postulierte, dass auch Elektronen Wellencharakter haben.</p>
-            <ul class="bullet-list">
-              <li>Um den Kern schwingende Elektronen bilden Wellen.</li>
-              <li>Die erlaubten Bahnen entsprechen stehenden Wellen.</li>
-              <li>Wenn die Welle nicht ganzzalig in den Umfang passt, löscht sie sich selber aus. (Destruktive Interferenz)</li>
-            </ul>
-          </section>
-          <section data-sidebar="hide" data-transition="slide">
-            <h2></h2>
-          </section>
-          <section data-sidebar="hide" data-transition="slide">
-            <h2></h2>
-          </section>
-        </section>
+                        <!-- ══ Quantenphysik Einstieg mit Bohr ══════════════════════════════ -->
+                        <section>
+                            <section
+                                data-atom="bohr"
+                                data-sidebar="hide"
+                                data-era="1913"
+                                data-transition="slide"
+                            >
+                                <div class="slide-tag">
+                                    Voraussetzung · 1900
+                                </div>
+                                <h2>
+                                    Die Idee der
+                                    <span class="hl2">Quantenphysik</span>
+                                </h2>
+                                <p>
+                                    Basis für Bohrs Modell:
+                                    <b>Max Planck (1900)</b> entdeckte, dass
+                                    Energie nicht kontinuierlich fließt, sondern
+                                    nur in diskreten Paketen abgegeben wird.
+                                </p>
+                                <div class="two-col">
+                                    <div class="info-box pink">
+                                        <div class="box-title">
+                                            Klassische Physik
+                                        </div>
+                                        <p>
+                                            Energie kann jeden beliebigen Wert
+                                            annehmen.
+                                        </p>
+                                    </div>
+                                    <div class="info-box pink">
+                                        <div class="box-title">
+                                            Quantenphysik
+                                        </div>
+                                        <p>
+                                            Energie wird nur in
+                                            <b>festen Portionen</b> abgegeben –
+                                            <span class="pink">Quanten</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="year-badge">1900</div>
+                                <aside class="notes">
+                                    - Plancks Quantentheorie: Energie wird in
+                                    diskreten Paketen (Quanten) abgegeben, nicht
+                                    kontinuierlich. - Diese Idee war
+                                    revolutionär und legte den Grundstein für
+                                    die Quantenphysik. - Diskontinuierlich nicht
+                                    kontinuierlich.
+                                </aside>
+                            </section>
 
+                            <section
+                                data-atom="bohr"
+                                data-sidebar="show"
+                                data-era="1913"
+                                data-transition="slide"
+                            >
+                                <div class="slide-tag">1913</div>
+                                <h2>
+                                    Niels <span class="hl2">Bohr</span> – Das
+                                    Schalenmodell
+                                </h2>
+                                <p>
+                                    Bohr übertrug Plancks Quantenidee auf den
+                                    Atomaufbau und löste damit Rutherfords
+                                    Stabilitätsproblem.
+                                </p>
+                                <ul class="bullet-list">
+                                    <li>
+                                        Elektronen kreisen nur auf
+                                        <b>festen, Bahnen</b> – den Schalen
+                                    </li>
+                                    <li>
+                                        Jede Schale hat ein
+                                        <b>klar definiertes Energieniveau</b>
+                                    </li>
+                                    <li>
+                                        <b>Energieaufnahme</b> → Elektron
+                                        springt auf äußere Schale
+                                    </li>
+                                    <li>
+                                        <b>Energieabgabe</b> → Elektron fällt
+                                        zurück
+                                    </li>
+                                </ul>
+                                <div
+                                    class="info-box pink"
+                                    style="margin-top: 10px"
+                                >
+                                    <div class="box-title">Kernprinzip</div>
+                                    <p>
+                                        Zwischen den Schalen gibt es
+                                        <b>keinen erlaubten Aufenthaltsort</b> –
+                                        der Sprung passiert
+                                        <span class="pink">instantan</span>,
+                                        ohne Zwischenstufe. Daher:
+                                        <b>Quantensprung</b>.
+                                    </p>
+                                </div>
+                                <div class="year-badge">1913</div>
+                                <aside class="notes">
+                                    - Bohr übertrug Plancks Quantentheorie auf
+                                    den Atomaufbau und löste damit Rutherfords
+                                    Stabilitätsproblem. - Elektronen kreisen nur
+                                    auf festen Bahnen (Schalen) mit definierten
+                                    Energieniveaus. - Energieaufnahme → Elektron
+                                    springt auf äußere Schale, Energieabgabe →
+                                    Elektron fällt zurück.
+                                </aside>
+                            </section>
+                            <section
+                                data-atom="bohr"
+                                data-sidebar="show"
+                                data-era="1913"
+                                data-transition="slide"
+                            >
+                                <div class="slide-tag">1913</div>
+                                <h2>
+                                    Bohrs Modell –
+                                    <span style="color: red">Probleme</span>
+                                </h2>
+                                <ul class="bullet-list">
+                                    <li>
+                                        Außgelassen: Elektronen stoßen sich
+                                        gegenseitig ab.
+                                    </li>
+                                </ul>
+                            </section>
+                        </section>
+                        <section>
+                            <section
+                                data-sidebar="hide"
+                                data-transition="slide"
+                            >
+                                <h2>
+                                    <span style="color: aquamarine"
+                                        >Le Broglie</span
+                                    >
+                                    und das Materiewellen-Model
+                                </h2>
+                                <p>
+                                    Louis de Broglie (1892–1987) erweiterte 1924
+                                    die Quantenidee auf Materie und postulierte,
+                                    dass auch Elektronen Wellencharakter haben.
+                                </p>
+                                <ul class="bullet-list">
+                                    <li>
+                                        Um den Kern schwingende Elektronen
+                                        werden von Wellen geleitet.
+                                    </li>
+                                    <li>
+                                        Die erlaubten Bahnen entsprechen
+                                        stehenden Wellen.
+                                    </li>
+                                    <li>
+                                        Wenn die Welle nicht ganzzalig in den
+                                        Umfang passt, löscht sie sich selber
+                                        aus. (Destruktive Interferenz)
+                                    </li>
+                                </ul>
+                            </section>
+                            <section
+                                data-sidebar="hide"
+                                data-transition="slide"
+                            >
+                                <h2></h2>
+                            </section>
+                            <section
+                                data-sidebar="hide"
+                                data-transition="slide"
+                            >
+                                <h2></h2>
+                            </section>
+                        </section>
 
-        <!--
+                        <!--
         <section data-atom="quantum" data-sidebar="show" data-era="1926 – heute">
           <div class="slide-tag">Modern · 1926 – heute</div>
           <h2>Das <span class="hl">Quantenmechanische</span> Atommodell</h2>
@@ -357,56 +679,87 @@
             de Broglie: Wellencharakter. Die Wellenfunktion ψ beschreibt keine Bahn,
             sondern eine Wahrscheinlichkeitsamplitude. |ψ|² = Aufenthaltswahrscheinlichkeit.
           </aside>
-        </section> 
+        </section>
         -->
 
-        <!-- ══ 9 · FRAGEN ════════════════════════════ -->
-        <section data-atom="quantum" data-sidebar="show" data-era="Abschluss">
-          <div class="big-q">?</div>
-          <div class="slide-tag">Abschluss</div>
-          <h2>Fragen &amp; <span class="hl">Feedback</span></h2>
-          <p>Vielen Dank für eure Aufmerksamkeit! Ich freue mich über Fragen,
-             Kommentare und Anmerkungen.</p>
-        </section>
+                        <!-- ══ 9 · FRAGEN ════════════════════════════ -->
+                        <section
+                            data-atom="quantum"
+                            data-sidebar="show"
+                            data-era="Abschluss"
+                        >
+                            <div class="big-q">?</div>
+                            <div class="slide-tag">Abschluss</div>
+                            <h2>
+                                Fragen &amp; <span class="hl">Feedback</span>
+                            </h2>
+                            <p>
+                                Vielen Dank für eure Aufmerksamkeit! Ich freue
+                                mich über Fragen, Kommentare und Anmerkungen.
+                            </p>
+                        </section>
 
-        <!-- ══ 10 · QUELLEN ══════════════════════════ -->
-        <section data-atom="none" data-sidebar="hide" data-era="">
-          <div class="slide-tag">Quellenverzeichnis</div>
-          <h2>Quellen</h2>
-          <ul class="source-list">
-            <li data-n="1">Podcast (Spotify): <b>Chemie Erklärt</b> Folge 1</li>
-            <li data-n="2">https://www.leifiphysik.de/atomphysik/atomaufbau/geschichte/entwicklung-der-atomvorstellung</li>
-            <li data-n="3">https://studyflix.de/chemie/bohrsches-atommodell-1833</li>
-            <li data-n="4">https://www.leifiphysik.de/atomphysik/bohrsches-atommodell/grundwissen/atommodell-von-bohr</li>
-            <li data-n="5">https://www.youtube.com/watch?v=_wH3cQ1NW-w</li>
-            <li data-n="6">Buch: "Das Geheimnis der Quantenwelt" von Thibault Damour & Mathieu Burniat</li>
-          </ul>
-          <br>
-          <p>
-            Diese Präsentation wurde mit dem Open-Source <b>Reveal.js</b> Javascript-Frameword erstellt.
-            Alle Grafiken, Animationen und das Design sind von mir selbst erstellt. 
-            Diese Website läuft auf einem Netcup Arch-Linux VMS von Frederick Martel.
-          </p>
-          <h3>(c) Frederick Martel 2026</h3>
-          <p>
-            This Software is licensed under the MIT License (https://opensource.org/licenses/MIT).
-          </p>
-        </section>
+                        <!-- ══ 10 · QUELLEN ══════════════════════════ -->
+                        <section
+                            data-atom="none"
+                            data-sidebar="hide"
+                            data-era=""
+                        >
+                            <div class="slide-tag">Quellenverzeichnis</div>
+                            <h2>Quellen</h2>
+                            <ul class="source-list">
+                                <li data-n="1">
+                                    Podcast (Spotify):
+                                    <b>Chemie Erklärt</b> Folge 1
+                                </li>
+                                <li data-n="2">
+                                    https://www.leifiphysik.de/atomphysik/atomaufbau/geschichte/entwicklung-der-atomvorstellung
+                                </li>
+                                <li data-n="3">
+                                    https://studyflix.de/chemie/bohrsches-atommodell-1833
+                                </li>
+                                <li data-n="4">
+                                    https://www.leifiphysik.de/atomphysik/bohrsches-atommodell/grundwissen/atommodell-von-bohr
+                                </li>
+                                <li data-n="5">
+                                    https://www.youtube.com/watch?v=_wH3cQ1NW-w
+                                </li>
+                                <li data-n="6">
+                                    Buch: "Das Geheimnis der Quantenwelt" von
+                                    Thibault Damour & Mathieu Burniat
+                                </li>
+                            </ul>
+                            <br />
+                            <p>
+                                Diese Präsentation wurde mit dem Open-Source
+                                <b>Reveal.js</b> Javascript-Frameword erstellt.
+                                Alle Grafiken, Animationen und das Design sind
+                                von mir selbst erstellt. Diese Website läuft auf
+                                einem Netcup Arch-Linux VMS von Frederick
+                                Martel.
+                            </p>
+                            <h3>(c) Frederick Martel 2026</h3>
+                            <p>
+                                This Software is licensed under the MIT License
+                                (https://opensource.org/licenses/MIT).
+                            </p>
+                        </section>
+                    </div>
+                    <!-- /.slides -->
+                </div>
+                <!-- /.reveal -->
+            </div>
+            <!-- /#reveal-container -->
+        </div>
+        <!-- /#wrapper -->
 
-      </div><!-- /.slides -->
-    </div><!-- /.reveal -->
-  </div><!-- /#reveal-container -->
-</div><!-- /#wrapper -->
-
-
-<!-- ══════════════════════════════════════════════
+        <!-- ══════════════════════════════════════════════
   REVEAL.JS + PLUGINS (CDN)
 ══════════════════════════════════════════════ -->
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/notes/notes.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/notes/notes.js"></script>
 
-<!-- Atom Renderer -->
-<script src="/js/atoms.js"></script>
-
-</body>
+        <!-- Atom Renderer -->
+        <script src="/js/atoms.js"></script>
+    </body>
 </html>
