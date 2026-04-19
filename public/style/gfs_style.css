@@ -34,7 +34,7 @@ body {
 }
 body {
     font-family: "Space Mono", monospace;
-    font-size: 20px;
+    font-size: 50px;
     color: var(--text);
     user-select: none;
 }
