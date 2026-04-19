@@ -10,10 +10,11 @@
     --danger: #f05a5a;
     --blue: #7878f0;
     --text: #dde2f4;
-    --muted: #6a7da0;
+    --muted: #7a8da0;
     --border: rgba(62, 232, 187, 0.14);
-    --sidebar-w: 600px;
+    --sidebar-w: 400px;
     --pad: 52px 60px 36px;
+    --fontsize: 15px;
 }
 
 /* ══════════════════════════════════════════════
@@ -34,7 +35,7 @@ body {
 }
 body {
     font-family: "Space Mono", monospace;
-    font-size: 50px;
+    font-size: var(--fontsize);
     color: var(--text);
     user-select: none;
 }
@@ -251,7 +252,6 @@ canvas#atomCanvas {
     text-transform: none !important;
 }
 .reveal p {
-    font-size: 13px !important;
     line-height: 1.9 !important;
     color: var(--muted) !important;
     max-width: 660px !important;
@@ -260,6 +260,7 @@ canvas#atomCanvas {
 }
 .reveal p b,
 .reveal li b {
+    font-size: var(--fontsize) !important;
     color: var(--text) !important;
     font-weight: 700 !important;
 }
